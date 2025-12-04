@@ -48,15 +48,10 @@ namespace SnakeGame
             _gameEngine.StateChanged += GameEngine_StateChanged;
             _gameEngine.GameOver += GameEngine_GameOver;
 
-            // NOTE: GameTimer.Tick is already wired in the Designer.
-            // Do NOT subscribe again here to avoid the Tick handler running twice.
-            // GameTimer.Tick += GameTimer_Tick;
-
             //khởi tạo ảnh
             FoodImage = Properties.Resources.DefaultSnakeFood;  
             SnakeBodyImage = Properties.Resources.DefaultSnakeBody;
             Image OrgHead = Properties.Resources.DefaultSnakeHead;
-
 
             SnakeHeadUpImage = (Image)OrgHead.Clone();
             SnakeHeadUpImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
@@ -68,7 +63,6 @@ namespace SnakeGame
             SnakeHeadLeftImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
 
             SnakeHeadRightImage = (Image)OrgHead.Clone();
-
 
             UpdateUI(_gameEngine.State);
         }
