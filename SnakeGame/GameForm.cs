@@ -65,7 +65,7 @@ namespace SnakeGame
             UpdateUI(_gameEngine.State);
         }
 
-        private void VeRan()
+        private void VeRan()    // Hàm vẽ rắn dựa trên lựa chọn màu từ MenuForm
         {
             switch(MauRan){
                 case 1:
@@ -97,10 +97,9 @@ namespace SnakeGame
             SnakeHeadRightImage = (Image)OrgSnakeHead.Clone();
         }
 
-        // Xử lý sự kiện State Changed từ GameEngine
         private void GameEngine_StateChanged(object sender, NewGameEngine.GameStateEventArgs e)
         {
-            UpdateUI(e.State);
+            UpdateUI(e.State);  // Xử lý sự kiện State Changed từ GameEngine
         }
 
         // Xử lý sự kiện Game Over từ GameEngine

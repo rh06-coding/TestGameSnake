@@ -62,6 +62,7 @@
             this.BlueSnakeRad.TabIndex = 2;
             this.BlueSnakeRad.TabStop = true;
             this.BlueSnakeRad.UseVisualStyleBackColor = true;
+            this.BlueSnakeRad.CheckedChanged += new System.EventHandler(this.BlueSnakeRad_CheckedChanged);
             // 
             // RedSnakeRad
             // 
@@ -73,6 +74,7 @@
             this.RedSnakeRad.TabIndex = 1;
             this.RedSnakeRad.TabStop = true;
             this.RedSnakeRad.UseVisualStyleBackColor = true;
+            this.RedSnakeRad.CheckedChanged += new System.EventHandler(this.RedSnakeRad_CheckedChanged);
             // 
             // DefaultSnakeRad
             // 
@@ -84,6 +86,7 @@
             this.DefaultSnakeRad.TabIndex = 0;
             this.DefaultSnakeRad.TabStop = true;
             this.DefaultSnakeRad.UseVisualStyleBackColor = true;
+            this.DefaultSnakeRad.CheckedChanged += new System.EventHandler(this.DefaultSnakeRad_CheckedChanged);
             // 
             // groupBox2
             // 
