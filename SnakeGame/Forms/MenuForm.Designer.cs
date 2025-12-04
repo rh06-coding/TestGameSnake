@@ -110,6 +110,7 @@
             this.Background1Rad.TabStop = true;
             this.Background1Rad.Text = "Backgound 1";
             this.Background1Rad.UseVisualStyleBackColor = true;
+            this.Background1Rad.CheckedChanged += new System.EventHandler(this.Background1Rad_CheckedChanged);
             // 
             // Background2Rad
             // 
@@ -122,6 +123,7 @@
             this.Background2Rad.TabStop = true;
             this.Background2Rad.Text = "Backgound 2";
             this.Background2Rad.UseVisualStyleBackColor = true;
+            this.Background2Rad.CheckedChanged += new System.EventHandler(this.Background2Rad_CheckedChanged);
             // 
             // button1
             // 
@@ -134,6 +136,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Start";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MenuForm
             // 

@@ -33,5 +33,22 @@ namespace SnakeGame.Forms
         {
             mauran = 3;
         }
+
+        private void Background1Rad_CheckedChanged(object sender, EventArgs e)
+        {
+            loaimap = 1;
+        }
+
+        private void Background2Rad_CheckedChanged(object sender, EventArgs e)
+        {
+            loaimap = 2;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GameForm form = new GameForm(loaimap, mauran);
+            this.Hide();
+            form.ShowDialog();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SnakeGame.Models;
+﻿using SnakeGame.Forms;
+using SnakeGame.Models;
 using SnakeGame.Services;
 using System;
 using System.Collections.Generic;
@@ -40,14 +41,31 @@ namespace SnakeGame
             this.MauRan = randuocchon;
 
             InitializeComponent();
-
-
+            
             this.KeyPreview = true;
             this.DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
         }
-
+        
+        private void VeBackground()
+        {
+            switch (LoaiMap)
+            {
+                case 1:
+                    GameCanvas.BackgroundImage = Properties.Resources.GameBackground1;
+                    GameCanvas.BackgroundImageLayout = ImageLayout.Stretch;
+                    break;
+                case 2:
+                    GameCanvas.BackgroundImage = Properties.Resources.GameBackground2;
+                    GameCanvas.BackgroundImageLayout = ImageLayout.Stretch;
+                    break;
+                default:
+                    GameCanvas.BackgroundImage = Properties.Resources.GameBackground1;
+                    GameCanvas.BackgroundImageLayout = ImageLayout.Stretch;
+                    break;
+            }
+        }
         private void InitializeGame()
         {
             //tính toán kích thước lưới dựa trên Panel
@@ -61,6 +79,7 @@ namespace SnakeGame
 
             //khởi tạo ảnh
             FoodImage = Properties.Resources.DefaultSnakeFood;
+            VeBackground();
             VeRan();
             UpdateUI(_gameEngine.State);
         }
@@ -164,7 +183,13 @@ namespace SnakeGame
                 {
                     _gameEngine.reset(); //ấn R để chơi lại
                 }
-                return;
+                else if(e.KeyCode == Keys.E)
+                {
+                    this.Hide();    //ấn E để thoát về menu
+                    MenuForm menuForm = new MenuForm();
+                    menuForm.ShowDialog();
+                }
+                    return;
             }
             if (e.KeyCode == Keys.Space)
             {
@@ -230,8 +255,8 @@ namespace SnakeGame
             // 3. Vẽ thông báo Game Over
             if (state.IsGameOver)
             {
-                string message = $"GAME OVER!\nScore: {state.Score}\nPress 'R' to Restart";
-                var font = new Font(FontFamily.GenericSansSerif, 24, FontStyle.Bold);
+                string message = $"GAME OVER!\nScore: {state.Score}\nPress: \n'R' to Restart  \n'E' to Back to menu";
+                var font = new Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold);
                 var size = g.MeasureString(message, font);
                 var x = (GameCanvas.Width - size.Width) / 2;
                 var y = (GameCanvas.Height - size.Height) / 2;
