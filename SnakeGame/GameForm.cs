@@ -47,8 +47,9 @@ namespace SnakeGame
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
         }
+
         
-        private void VeBackground()
+        private void VeBackground() //Hàm vẽ background dựa trên lựa chọn từ MenuForm
         {
             switch (LoaiMap)
             {
