@@ -189,6 +189,7 @@ namespace SnakeGame
                     _gameEngine.ChangeDirection(Direction.Huong.Right);
                     break;
             }
+
             if (state.IsGameOver) //nếu đã thua
             {
                 if (e.KeyCode == Keys.R)
@@ -203,9 +204,13 @@ namespace SnakeGame
                 }
                     return;
             }
+
             if (e.KeyCode == Keys.Space)
             {
                 GameTimer.Start();    //bắt đầu timer trong game engine
+                e.Handled = true;       
+                e.SuppressKeyPress = true;
+                this.Focus();
                 return;
             }
         }
@@ -287,7 +292,6 @@ namespace SnakeGame
                 GameTimer.Stop();
                 PauseMenuPanel.Visible = true;
                 PauseMenuPanel.BringToFront();
-                ResumeBtn.Focus();
             }
             else
             {
@@ -327,6 +331,7 @@ namespace SnakeGame
         private void GameForm_Load(object sender, EventArgs e)
         {
             InitializeGame();
+            
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
@@ -352,6 +357,40 @@ namespace SnakeGame
             this.Hide();
             MenuForm menuForm = new MenuForm();
             menuForm.ShowDialog();
+        }
+
+        //Xử lý lỗi bị chuyển focus khi nhân phím mũi tên
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+    
+            if (_gameEngine != null && !_isPaused && !_gameEngine.State.IsGameOver)
+            {
+                switch (keyData)
+                {
+                    case Keys.Up:
+                    case Keys.W:
+                        _gameEngine.ChangeDirection(Direction.Huong.Up);
+                        return true; 
+
+                    case Keys.Down:
+                    case Keys.S:
+                        _gameEngine.ChangeDirection(Direction.Huong.Down);
+                        return true;
+
+                    case Keys.Left:
+                    case Keys.A:
+                        _gameEngine.ChangeDirection(Direction.Huong.Left);
+                        return true;
+
+                    case Keys.Right:
+                    case Keys.D:
+                        _gameEngine.ChangeDirection(Direction.Huong.Right);
+                        return true;
+                }
+            }
+
+            // Với các phím khác (như Space, Esc...), trả về xử lý mặc định
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

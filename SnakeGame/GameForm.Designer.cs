@@ -71,6 +71,7 @@
             // 
             // PauseBtn
             // 
+            this.PauseBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PauseBtn.Location = new System.Drawing.Point(834, 180);
             this.PauseBtn.Name = "PauseBtn";
             this.PauseBtn.Size = new System.Drawing.Size(75, 64);
@@ -99,6 +100,7 @@
             this.ResumeBtn.Name = "ResumeBtn";
             this.ResumeBtn.Size = new System.Drawing.Size(89, 65);
             this.ResumeBtn.TabIndex = 0;
+            this.ResumeBtn.TabStop = false;
             this.ResumeBtn.Text = "Resume";
             this.ResumeBtn.UseVisualStyleBackColor = true;
             this.ResumeBtn.Click += new System.EventHandler(this.ResumeBtn_Click);
@@ -110,6 +112,7 @@
             this.QuitToMenuBtn.Name = "QuitToMenuBtn";
             this.QuitToMenuBtn.Size = new System.Drawing.Size(89, 65);
             this.QuitToMenuBtn.TabIndex = 1;
+            this.QuitToMenuBtn.TabStop = false;
             this.QuitToMenuBtn.Text = "Quit To Menu";
             this.QuitToMenuBtn.UseVisualStyleBackColor = true;
             this.QuitToMenuBtn.Click += new System.EventHandler(this.QuitToMenuBtn_Click);
