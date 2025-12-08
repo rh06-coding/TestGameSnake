@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.UsernameTxt = new System.Windows.Forms.TextBox();
+            this.passwordTxt = new System.Windows.Forms.MaskedTextBox();
             this.Label = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LoginBtn = new System.Windows.Forms.Button();
@@ -37,19 +37,19 @@
             this.FPBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // UsernameTxt
             // 
-            this.textBox1.Location = new System.Drawing.Point(369, 259);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(230, 22);
-            this.textBox1.TabIndex = 0;
+            this.UsernameTxt.Location = new System.Drawing.Point(369, 259);
+            this.UsernameTxt.Name = "UsernameTxt";
+            this.UsernameTxt.Size = new System.Drawing.Size(230, 22);
+            this.UsernameTxt.TabIndex = 0;
             // 
-            // maskedTextBox1
+            // passwordTxt
             // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(369, 308);
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(230, 22);
-            this.maskedTextBox1.TabIndex = 1;
+            this.passwordTxt.Location = new System.Drawing.Point(369, 308);
+            this.passwordTxt.Name = "passwordTxt";
+            this.passwordTxt.Size = new System.Drawing.Size(230, 22);
+            this.passwordTxt.TabIndex = 1;
             // 
             // Label
             // 
@@ -118,8 +118,8 @@
             this.Controls.Add(this.LoginBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Label);
-            this.Controls.Add(this.maskedTextBox1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.passwordTxt);
+            this.Controls.Add(this.UsernameTxt);
             this.Name = "StartForm";
             this.Text = "StartForm";
             this.ResumeLayout(false);
@@ -129,8 +129,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.TextBox UsernameTxt;
+        private System.Windows.Forms.MaskedTextBox passwordTxt;
         private System.Windows.Forms.Label Label;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button LoginBtn;
