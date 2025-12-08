@@ -35,6 +35,8 @@ namespace SnakeGame
         private Image SnakeHeadLeftImage;
         private Image SnakeHeadRightImage;
         private Image OrgSnakeHead;
+
+        private bool _isPaused = false; // Biến để theo dõi trạng thái tạm dừng
         public GameForm(int mapduocchon, int randuocchon)
         {
             this.LoaiMap = mapduocchon;
@@ -45,7 +47,6 @@ namespace SnakeGame
             this.KeyPreview = true;
             this.DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-
         }
 
         
@@ -148,6 +149,8 @@ namespace SnakeGame
             GameCanvas.Invalidate();
         }
 
+
+        //Xử lý sự kiện KeyDown để điều khiển rắn và các chức năng khác
         private void Game_KeyDown(object sender, KeyEventArgs e)
         {
             if(_gameEngine == null)
@@ -158,9 +161,17 @@ namespace SnakeGame
             var state = _gameEngine.State;
             if (state == null) return;
 
-            
-            switch (e.KeyCode)
+            if(e.KeyCode == Keys.Escape)
             {
+                TogglePause();
+                e.Handled = true;
+                return;
+            }
+
+            if (_isPaused) return;  //Ngăn chặn xử lý phím khác
+            
+            switch (e.KeyCode)      //Điều khiển rắn bằng phím mũi tên hoặc W,A,S,D hoặc phím mũi tên
+                {
                 case Keys.Up:
                 case Keys.W:
                     _gameEngine.ChangeDirection(Direction.Huong.Up);
@@ -211,16 +222,14 @@ namespace SnakeGame
 
             var state = _gameEngine.State;
 
-            // KIỂM TRA 2: state có tồn tại không?
-            if (state == null)
+            if (state == null)  // KIỂM TRA 2: state có tồn tại không?
             {
                 return;
             }
 
-            // 1. Vẽ Thức ăn (Food)
-            var food = state.Food;
-            // KIỂM TRA 3: food có tồn tại không?
-            if (food != null)
+           var food = state.Food;    // 1. Vẽ Thức ăn (Food)
+            
+            if (food != null)   // KIỂM TRA 3: food có tồn tại không?
             {
                 var foodRect = new Rectangle(food.Location.X * GridSize, food.Location.Y * GridSize, GridSize, GridSize);
                 g.DrawImage(FoodImage, foodRect);
@@ -267,7 +276,32 @@ namespace SnakeGame
             }
         }
 
+        private void TogglePause()
+        {
+            if (_gameEngine.State.IsGameOver) return;   //Nếu game kết thúc thì không cho pause
 
+            _isPaused = !_isPaused;
+
+            if (_isPaused)
+            {
+                GameTimer.Stop();
+                PauseMenuPanel.Visible = true;
+                PauseMenuPanel.BringToFront();
+                ResumeBtn.Focus();
+            }
+            else
+            {
+                ResumeGame();
+            }
+        }
+
+        private void ResumeGame()
+        {
+            _isPaused = false;
+            PauseMenuPanel.Visible = false;
+            GameTimer.Start();
+            this.Focus();
+        }
         private Image GetSnakeHead(Direction.Huong dir)
         {
             switch (dir)
@@ -304,7 +338,20 @@ namespace SnakeGame
 
         private void PauseBtn_Click(object sender, EventArgs e)
         {
+            TogglePause();
+        }
 
+        private void ResumeBtn_Click(object sender, EventArgs e)
+        {
+            ResumeGame();
+        }
+
+        private void QuitToMenuBtn_Click(object sender, EventArgs e)
+        {
+            PauseMenuPanel.Visible = false;
+            this.Hide();
+            MenuForm menuForm = new MenuForm();
+            menuForm.ShowDialog();
         }
     }
 }

@@ -75,6 +75,7 @@
             this.PauseBtn.Name = "PauseBtn";
             this.PauseBtn.Size = new System.Drawing.Size(75, 64);
             this.PauseBtn.TabIndex = 2;
+            this.PauseBtn.TabStop = false;
             this.PauseBtn.Text = "Pause";
             this.PauseBtn.UseVisualStyleBackColor = true;
             this.PauseBtn.Click += new System.EventHandler(this.PauseBtn_Click);
@@ -100,6 +101,7 @@
             this.ResumeBtn.TabIndex = 0;
             this.ResumeBtn.Text = "Resume";
             this.ResumeBtn.UseVisualStyleBackColor = true;
+            this.ResumeBtn.Click += new System.EventHandler(this.ResumeBtn_Click);
             // 
             // QuitToMenuBtn
             // 
@@ -110,6 +112,7 @@
             this.QuitToMenuBtn.TabIndex = 1;
             this.QuitToMenuBtn.Text = "Quit To Menu";
             this.QuitToMenuBtn.UseVisualStyleBackColor = true;
+            this.QuitToMenuBtn.Click += new System.EventHandler(this.QuitToMenuBtn_Click);
             // 
             // label1
             // 
