@@ -33,6 +33,12 @@
             this.GameCanvas = new System.Windows.Forms.Panel();
             this.ScoreLabel = new System.Windows.Forms.Label();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
+            this.PauseBtn = new System.Windows.Forms.Button();
+            this.PauseMenuPanel = new System.Windows.Forms.Panel();
+            this.ResumeBtn = new System.Windows.Forms.Button();
+            this.QuitToMenuBtn = new System.Windows.Forms.Button();
+            this.GameCanvas.SuspendLayout();
+            this.PauseMenuPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // GameCanvas
@@ -40,6 +46,7 @@
             this.GameCanvas.BackColor = System.Drawing.Color.Black;
             this.GameCanvas.BackgroundImage = global::SnakeGame.Properties.Resources.GameBackground1;
             this.GameCanvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.GameCanvas.Controls.Add(this.PauseMenuPanel);
             this.GameCanvas.Location = new System.Drawing.Point(0, 0);
             this.GameCanvas.Name = "GameCanvas";
             this.GameCanvas.Size = new System.Drawing.Size(740, 640);
@@ -61,6 +68,47 @@
             this.GameTimer.Interval = 250;
             this.GameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
+            // PauseBtn
+            // 
+            this.PauseBtn.Location = new System.Drawing.Point(834, 180);
+            this.PauseBtn.Name = "PauseBtn";
+            this.PauseBtn.Size = new System.Drawing.Size(75, 64);
+            this.PauseBtn.TabIndex = 2;
+            this.PauseBtn.Text = "Pause";
+            this.PauseBtn.UseVisualStyleBackColor = true;
+            this.PauseBtn.Click += new System.EventHandler(this.PauseBtn_Click);
+            // 
+            // PauseMenuPanel
+            // 
+            this.PauseMenuPanel.BackColor = System.Drawing.Color.White;
+            this.PauseMenuPanel.Controls.Add(this.QuitToMenuBtn);
+            this.PauseMenuPanel.Controls.Add(this.ResumeBtn);
+            this.PauseMenuPanel.Location = new System.Drawing.Point(300, 200);
+            this.PauseMenuPanel.Name = "PauseMenuPanel";
+            this.PauseMenuPanel.Size = new System.Drawing.Size(400, 300);
+            this.PauseMenuPanel.TabIndex = 3;
+            this.PauseMenuPanel.Visible = false;
+            // 
+            // ResumeBtn
+            // 
+            this.ResumeBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResumeBtn.Location = new System.Drawing.Point(248, 176);
+            this.ResumeBtn.Name = "ResumeBtn";
+            this.ResumeBtn.Size = new System.Drawing.Size(89, 65);
+            this.ResumeBtn.TabIndex = 0;
+            this.ResumeBtn.Text = "Resume";
+            this.ResumeBtn.UseVisualStyleBackColor = true;
+            // 
+            // QuitToMenuBtn
+            // 
+            this.QuitToMenuBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.QuitToMenuBtn.Location = new System.Drawing.Point(67, 176);
+            this.QuitToMenuBtn.Name = "QuitToMenuBtn";
+            this.QuitToMenuBtn.Size = new System.Drawing.Size(89, 65);
+            this.QuitToMenuBtn.TabIndex = 1;
+            this.QuitToMenuBtn.Text = "Quit To Menu";
+            this.QuitToMenuBtn.UseVisualStyleBackColor = true;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -69,6 +117,7 @@
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(982, 653);
+            this.Controls.Add(this.PauseBtn);
             this.Controls.Add(this.ScoreLabel);
             this.Controls.Add(this.GameCanvas);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -78,6 +127,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_Closing);
             this.Load += new System.EventHandler(this.GameForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Game_KeyDown);
+            this.GameCanvas.ResumeLayout(false);
+            this.PauseMenuPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -88,6 +139,10 @@
         private System.Windows.Forms.Panel GameCanvas;
         private System.Windows.Forms.Label ScoreLabel;
         private System.Windows.Forms.Timer GameTimer;
+        private System.Windows.Forms.Panel PauseMenuPanel;
+        private System.Windows.Forms.Button PauseBtn;
+        private System.Windows.Forms.Button QuitToMenuBtn;
+        private System.Windows.Forms.Button ResumeBtn;
     }
 }
 

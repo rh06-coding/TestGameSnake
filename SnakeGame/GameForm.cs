@@ -302,6 +302,9 @@ namespace SnakeGame
             GameCanvas.Invalidate();
         }
 
+        private void PauseBtn_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
