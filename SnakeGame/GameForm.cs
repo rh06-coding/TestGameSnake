@@ -325,7 +325,14 @@ namespace SnakeGame
 
         private void GameForm_Closing(object sender, FormClosingEventArgs e)
         {
-           
+            GameTimer?.Stop();
+            if (_gameEngine is IDisposable d) d.Dispose(); // if it implements IDisposable
+            FoodImage?.Dispose();
+            SnakeBodyImage?.Dispose();
+            SnakeHeadUpImage?.Dispose();
+            SnakeHeadDownImage?.Dispose();
+            SnakeHeadLeftImage?.Dispose();
+            SnakeHeadRightImage?.Dispose();
         }
 
         private void GameForm_Load(object sender, EventArgs e)
@@ -391,6 +398,11 @@ namespace SnakeGame
 
             // Với các phím khác (như Space, Esc...), trả về xử lý mặc định
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void GameForm_Closed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

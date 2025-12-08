@@ -31,13 +31,13 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
             this.GameCanvas = new System.Windows.Forms.Panel();
+            this.PauseMenuPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.QuitToMenuBtn = new System.Windows.Forms.Button();
+            this.ResumeBtn = new System.Windows.Forms.Button();
             this.ScoreLabel = new System.Windows.Forms.Label();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.PauseBtn = new System.Windows.Forms.Button();
-            this.PauseMenuPanel = new System.Windows.Forms.Panel();
-            this.ResumeBtn = new System.Windows.Forms.Button();
-            this.QuitToMenuBtn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.GameCanvas.SuspendLayout();
             this.PauseMenuPanel.SuspendLayout();
             this.SuspendLayout();
@@ -53,6 +53,52 @@
             this.GameCanvas.Size = new System.Drawing.Size(740, 640);
             this.GameCanvas.TabIndex = 0;
             this.GameCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.GameCanvas_Paint);
+            // 
+            // PauseMenuPanel
+            // 
+            this.PauseMenuPanel.BackColor = System.Drawing.Color.White;
+            this.PauseMenuPanel.Controls.Add(this.label1);
+            this.PauseMenuPanel.Controls.Add(this.QuitToMenuBtn);
+            this.PauseMenuPanel.Controls.Add(this.ResumeBtn);
+            this.PauseMenuPanel.Location = new System.Drawing.Point(300, 200);
+            this.PauseMenuPanel.Name = "PauseMenuPanel";
+            this.PauseMenuPanel.Size = new System.Drawing.Size(400, 300);
+            this.PauseMenuPanel.TabIndex = 3;
+            this.PauseMenuPanel.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Pristina", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(116, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(174, 44);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Game Paused";
+            // 
+            // QuitToMenuBtn
+            // 
+            this.QuitToMenuBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.QuitToMenuBtn.Location = new System.Drawing.Point(67, 176);
+            this.QuitToMenuBtn.Name = "QuitToMenuBtn";
+            this.QuitToMenuBtn.Size = new System.Drawing.Size(89, 65);
+            this.QuitToMenuBtn.TabIndex = 1;
+            this.QuitToMenuBtn.TabStop = false;
+            this.QuitToMenuBtn.Text = "Quit To Menu";
+            this.QuitToMenuBtn.UseVisualStyleBackColor = true;
+            this.QuitToMenuBtn.Click += new System.EventHandler(this.QuitToMenuBtn_Click);
+            // 
+            // ResumeBtn
+            // 
+            this.ResumeBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResumeBtn.Location = new System.Drawing.Point(248, 176);
+            this.ResumeBtn.Name = "ResumeBtn";
+            this.ResumeBtn.Size = new System.Drawing.Size(89, 65);
+            this.ResumeBtn.TabIndex = 0;
+            this.ResumeBtn.TabStop = false;
+            this.ResumeBtn.Text = "Resume";
+            this.ResumeBtn.UseVisualStyleBackColor = true;
+            this.ResumeBtn.Click += new System.EventHandler(this.ResumeBtn_Click);
             // 
             // ScoreLabel
             // 
@@ -81,52 +127,6 @@
             this.PauseBtn.UseVisualStyleBackColor = true;
             this.PauseBtn.Click += new System.EventHandler(this.PauseBtn_Click);
             // 
-            // PauseMenuPanel
-            // 
-            this.PauseMenuPanel.BackColor = System.Drawing.Color.White;
-            this.PauseMenuPanel.Controls.Add(this.label1);
-            this.PauseMenuPanel.Controls.Add(this.QuitToMenuBtn);
-            this.PauseMenuPanel.Controls.Add(this.ResumeBtn);
-            this.PauseMenuPanel.Location = new System.Drawing.Point(300, 200);
-            this.PauseMenuPanel.Name = "PauseMenuPanel";
-            this.PauseMenuPanel.Size = new System.Drawing.Size(400, 300);
-            this.PauseMenuPanel.TabIndex = 3;
-            this.PauseMenuPanel.Visible = false;
-            // 
-            // ResumeBtn
-            // 
-            this.ResumeBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ResumeBtn.Location = new System.Drawing.Point(248, 176);
-            this.ResumeBtn.Name = "ResumeBtn";
-            this.ResumeBtn.Size = new System.Drawing.Size(89, 65);
-            this.ResumeBtn.TabIndex = 0;
-            this.ResumeBtn.TabStop = false;
-            this.ResumeBtn.Text = "Resume";
-            this.ResumeBtn.UseVisualStyleBackColor = true;
-            this.ResumeBtn.Click += new System.EventHandler(this.ResumeBtn_Click);
-            // 
-            // QuitToMenuBtn
-            // 
-            this.QuitToMenuBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.QuitToMenuBtn.Location = new System.Drawing.Point(67, 176);
-            this.QuitToMenuBtn.Name = "QuitToMenuBtn";
-            this.QuitToMenuBtn.Size = new System.Drawing.Size(89, 65);
-            this.QuitToMenuBtn.TabIndex = 1;
-            this.QuitToMenuBtn.TabStop = false;
-            this.QuitToMenuBtn.Text = "Quit To Menu";
-            this.QuitToMenuBtn.UseVisualStyleBackColor = true;
-            this.QuitToMenuBtn.Click += new System.EventHandler(this.QuitToMenuBtn_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Pristina", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(116, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(181, 45);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Game Paused";
-            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -143,6 +143,7 @@
             this.Name = "GameForm";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_Closing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GameForm_Closed);
             this.Load += new System.EventHandler(this.GameForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Game_KeyDown);
             this.GameCanvas.ResumeLayout(false);
