@@ -37,6 +37,7 @@
             this.PauseMenuPanel = new System.Windows.Forms.Panel();
             this.ResumeBtn = new System.Windows.Forms.Button();
             this.QuitToMenuBtn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.GameCanvas.SuspendLayout();
             this.PauseMenuPanel.SuspendLayout();
             this.SuspendLayout();
@@ -81,6 +82,7 @@
             // PauseMenuPanel
             // 
             this.PauseMenuPanel.BackColor = System.Drawing.Color.White;
+            this.PauseMenuPanel.Controls.Add(this.label1);
             this.PauseMenuPanel.Controls.Add(this.QuitToMenuBtn);
             this.PauseMenuPanel.Controls.Add(this.ResumeBtn);
             this.PauseMenuPanel.Location = new System.Drawing.Point(300, 200);
@@ -109,6 +111,16 @@
             this.QuitToMenuBtn.Text = "Quit To Menu";
             this.QuitToMenuBtn.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Pristina", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(116, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(181, 45);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Game Paused";
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -129,6 +141,7 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Game_KeyDown);
             this.GameCanvas.ResumeLayout(false);
             this.PauseMenuPanel.ResumeLayout(false);
+            this.PauseMenuPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,6 +156,7 @@
         private System.Windows.Forms.Button PauseBtn;
         private System.Windows.Forms.Button QuitToMenuBtn;
         private System.Windows.Forms.Button ResumeBtn;
+        private System.Windows.Forms.Label label1;
     }
 }
 
