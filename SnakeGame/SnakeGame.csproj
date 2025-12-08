@@ -110,11 +110,17 @@
     <None Include="Resources\SnakeGameStartScreen.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\BlueSnake\bluebody.png" />
+    <Content Include="Resources\BlueSnake\bluehead.png" />
     <Content Include="Resources\DefaultSnake\Body.png" />
     <Content Include="Resources\DefaultSnake\DeadBody.png" />
     <Content Include="Resources\DefaultSnake\DeadHead.png" />
     <Content Include="Resources\DefaultSnake\Food.png" />
     <Content Include="Resources\DefaultSnake\Head.png" />
+    <Content Include="Resources\GameBackground\GameBackground1.png" />
+    <Content Include="Resources\GameBackground\GameBackground2.jpg" />
+    <Content Include="Resources\RedSnake\redbody.png" />
+    <Content Include="Resources\RedSnake\redhead.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
