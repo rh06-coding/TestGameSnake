@@ -62,6 +62,7 @@
             this.ConfirmBtn.TabIndex = 2;
             this.ConfirmBtn.Text = "Confirm";
             this.ConfirmBtn.UseVisualStyleBackColor = false;
+            this.ConfirmBtn.Click += new System.EventHandler(this.ConfirmBtn_Click);
             // 
             // label
             // 
@@ -79,6 +80,7 @@
             this.ResetPasswordTxt.Name = "ResetPasswordTxt";
             this.ResetPasswordTxt.Size = new System.Drawing.Size(305, 22);
             this.ResetPasswordTxt.TabIndex = 4;
+            this.ResetPasswordTxt.UseSystemPasswordChar = true;
             // 
             // ForgotPassword
             // 

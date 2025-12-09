@@ -44,8 +44,13 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DatabaseHelper.cs" />
+    <Compile Include="Database\ScoreRepository.cs" />
+    <Compile Include="Database\SessionManager.cs" />
+    <Compile Include="Database\TaiKhoanRepository.cs" />
     <Compile Include="Forms\ForgotPasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,9 +85,16 @@
     <Compile Include="Models\Food.cs" />
     <Compile Include="Models\GameState.cs" />
     <Compile Include="Models\Position.cs" />
+    <Compile Include="Models\Score.cs" />
     <Compile Include="Models\Snake.cs" />
+    <Compile Include="Models\TaiKhoan.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuanLyNguoiChoiDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuanLyNguoiChoiDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Service\CollisionDetector.cs" />
     <Compile Include="Service\GameEngine.cs" />
     <Compile Include="Service\NewGameEngine.cs" />
@@ -125,6 +137,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="QuanLyNguoiChoiDataSet.xsc">
+      <DependentUpon>QuanLyNguoiChoiDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="QuanLyNguoiChoiDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>QuanLyNguoiChoiDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="QuanLyNguoiChoiDataSet.xss">
+      <DependentUpon>QuanLyNguoiChoiDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Resources\SnakeGameStartScreen.png" />
   </ItemGroup>
   <ItemGroup>

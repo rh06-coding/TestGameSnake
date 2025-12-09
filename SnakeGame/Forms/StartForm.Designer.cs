@@ -83,6 +83,7 @@
             this.LoginBtn.TabIndex = 4;
             this.LoginBtn.Text = "Login";
             this.LoginBtn.UseVisualStyleBackColor = false;
+            this.LoginBtn.Click += new System.EventHandler(this.LoginBtn_Click);
             // 
             // SignInBtn
             // 
@@ -94,6 +95,7 @@
             this.SignInBtn.TabIndex = 5;
             this.SignInBtn.Text = "Sign In";
             this.SignInBtn.UseVisualStyleBackColor = false;
+            this.SignInBtn.Click += new System.EventHandler(this.SignInBtn_Click);
             // 
             // FPBtn
             // 
@@ -105,6 +107,7 @@
             this.FPBtn.TabIndex = 6;
             this.FPBtn.Text = "Forgot Password";
             this.FPBtn.UseVisualStyleBackColor = false;
+            this.FPBtn.Click += new System.EventHandler(this.FPBtn_Click);
             // 
             // StartForm
             // 

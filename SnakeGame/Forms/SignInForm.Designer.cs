@@ -34,6 +34,7 @@
             this.UsernameTxt = new System.Windows.Forms.TextBox();
             this.EmailTxt = new System.Windows.Forms.TextBox();
             this.PasswordTxt = new System.Windows.Forms.TextBox();
+            this.ConfirmBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -86,6 +87,19 @@
             this.PasswordTxt.Name = "PasswordTxt";
             this.PasswordTxt.Size = new System.Drawing.Size(269, 22);
             this.PasswordTxt.TabIndex = 5;
+            this.PasswordTxt.UseSystemPasswordChar = true;
+            // 
+            // ConfirmBtn
+            // 
+            this.ConfirmBtn.BackColor = System.Drawing.Color.LightBlue;
+            this.ConfirmBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ConfirmBtn.Location = new System.Drawing.Point(306, 280);
+            this.ConfirmBtn.Name = "ConfirmBtn";
+            this.ConfirmBtn.Size = new System.Drawing.Size(120, 50);
+            this.ConfirmBtn.TabIndex = 6;
+            this.ConfirmBtn.Text = "Confirm";
+            this.ConfirmBtn.UseVisualStyleBackColor = false;
+            this.ConfirmBtn.Click += new System.EventHandler(this.ConfirmBtn_Click);
             // 
             // SignInForm
             // 
@@ -93,6 +107,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.PasswordTxt);
             this.Controls.Add(this.EmailTxt);
             this.Controls.Add(this.UsernameTxt);
@@ -114,5 +129,6 @@
         private System.Windows.Forms.TextBox UsernameTxt;
         private System.Windows.Forms.TextBox EmailTxt;
         private System.Windows.Forms.TextBox PasswordTxt;
+        private System.Windows.Forms.Button ConfirmBtn;
     }
 }
