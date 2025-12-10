@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="SnakeGame/SnakeGame.csproj" Id="f133fe66-a0da-4c4e-a98e-166ca2c7659c" />
+  <Project Path="SnakeGame/SnakeGame.csproj" Id="f133fe66-a0da-4c4e-a98e-166ca2c7659c">
+    <BuildType Project="Debug" />
+  </Project>
 </Solution>
