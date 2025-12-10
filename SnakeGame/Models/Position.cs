@@ -17,7 +17,7 @@ namespace SnakeGame.Models
             Y = y;
         }
 
-        // Cong vi tri vector(dx, dy)
+        // Cộng vị trí vector(dx, dy)
         public Position Add(int dx, int dy)
         {
             return new Position(X + dx, Y + dy);
@@ -28,7 +28,7 @@ namespace SnakeGame.Models
             return new Position(pos.X + vector.dx, pos.Y + vector.dy);
         }
 
-        // So sanh bang nhau - tối ưu
+        // So sánh bằng nhau - tối ưu
         public override bool Equals(object obj)
         {
             return obj is Position other && Equals(other);

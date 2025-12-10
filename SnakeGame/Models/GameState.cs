@@ -57,18 +57,18 @@ namespace SnakeGame.Models
         {
             if (IsGameOver) return false;
 
-            // Di chuyen ran phia truoc
+            // Di chuyển rắn phía trước
             Snake.Move();
             var head = Snake.Body[0];
 
-            // Kiem tra va cham tuong (inline check nhanh hơn)
+            // Kiểm tra va chạm tường (inline check nhanh hơn)
             if (head.X < 0 || head.X >= Columns || head.Y < 0 || head.Y >= Rows)
             {
                 IsGameOver = true;
                 return false;
             }
 
-            // Kiem tra va cham than - sử dụng HashSet thay vì LINQ (O(1) vs O(n))
+            // Kiểm tra va chạm thân - sử dụng HashSet thay vì LINQ (O(1) vs O(n))
             // Chỉ kiểm tra từ phần tử thứ 1 trở đi (bỏ qua đầu)
             UpdateBodyPositionsCache();
             _bodyPositions.Remove(head); // Remove head trước khi check
@@ -79,7 +79,7 @@ namespace SnakeGame.Models
                 return false;
             }
 
-            // Kiem tra an thuc an
+            // Kiểm tra ăn thức ăn
             if (Food.IsAt(head))
             {
                 Snake.Grow();

@@ -17,7 +17,7 @@ namespace SnakeGame.Models
             Location = new Position(0, 0);
         }
 
-        //Dat thuc an o vi tri ngau nhien khong trung voi ran
+        // Đặt thức ăn ở vị trí ngẫu nhiên không trùng với rắn
         public void PlaceAtRandom(int columns, int rows, IReadOnlyCollection<Position> occupied = null)
         {
             if (columns <= 0) throw new ArgumentOutOfRangeException(nameof(columns));

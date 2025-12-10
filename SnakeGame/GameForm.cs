@@ -16,8 +16,8 @@ namespace SnakeGame
 {
     public partial class GameForm : Form
     {
-        //Khai báo biến lưu trữ lựa chọn từ MenuForm
-        private int LoaiMap;    //1: map1 (mặc định) | 2: map2
+        // Khai báo biến lưu trữ lựa chọn từ MenuForm
+        private int LoaiMap;    // 1: map1 (mặc định) | 2: map2
         private int MauRan;     // 1: rắn xanh lá (mặc định) | 2: rắn đỏ | 3: rắn xanh dương
 
         private NewGameEngine _gameEngine;
@@ -25,11 +25,11 @@ namespace SnakeGame
         private int columns;
         private int rows;
 
-        //      ===THÊM CÁC BIẾN HÌNH ẢNH===
+        // THÊM CÁC BIẾN HÌNH ẢNH
         private Image FoodImage;
         private Image SnakeBodyImage;
 
-        //4 hình ảnh cho 4 hướng của đầu rắn
+        // 4 hình ảnh cho 4 hướng của đầu rắn
         private Image SnakeHeadUpImage;
         private Image SnakeHeadDownImage;
         private Image SnakeHeadLeftImage;
@@ -50,7 +50,7 @@ namespace SnakeGame
         }
 
         
-        private void VeBackground() //Hàm vẽ background dựa trên lựa chọn từ MenuForm
+        private void VeBackground() // Hàm vẽ background dựa trên lựa chọn từ MenuForm
         {
             switch (LoaiMap)
             {
@@ -70,16 +70,16 @@ namespace SnakeGame
         }
         private void InitializeGame()
         {
-            //tính toán kích thước lưới dựa trên Panel
+            // Tính toán kích thước lưới dựa trên Panel
             columns = GameCanvas.Width / GridSize;
             rows = GameCanvas.Height / GridSize;
 
-            //Khởi tạo game engine
+            // Khởi tạo game engine
             _gameEngine = new NewGameEngine(columns, rows);
             _gameEngine.StateChanged += GameEngine_StateChanged;
             _gameEngine.GameOver += GameEngine_GameOver;
 
-            //khởi tạo ảnh
+            // Khởi tạo ảnh
             FoodImage = Properties.Resources.DefaultSnakeFood;
             VeBackground();
             VeRan();
@@ -150,7 +150,7 @@ namespace SnakeGame
         }
 
 
-        //Xử lý sự kiện KeyDown để điều khiển rắn và các chức năng khác
+        // Xử lý sự kiện KeyDown để điều khiển rắn và các chức năng khác
         private void Game_KeyDown(object sender, KeyEventArgs e)
         {
             if(_gameEngine == null)
@@ -168,9 +168,9 @@ namespace SnakeGame
                 return;
             }
 
-            if (_isPaused) return;  //Ngăn chặn xử lý phím khác
+            if (_isPaused) return;  // Ngăn chặn xử lý phím khác
             
-            switch (e.KeyCode)      //Điều khiển rắn bằng phím mũi tên hoặc W,A,S,D hoặc phím mũi tên
+            switch (e.KeyCode)      // Điều khiển rắn bằng phím mũi tên hoặc W,A,S,D hoặc phím mũi tên
                 {
                 case Keys.Up:
                 case Keys.W:
@@ -190,15 +190,15 @@ namespace SnakeGame
                     break;
             }
 
-            if (state.IsGameOver) //nếu đã thua
+            if (state.IsGameOver) // nếu đã thua
             {
                 if (e.KeyCode == Keys.R)
                 {
-                    _gameEngine.reset(); //ấn R để chơi lại
+                    _gameEngine.reset(); // ấn R để chơi lại
                 }
                 else if(e.KeyCode == Keys.E)
                 {
-                    this.Hide();    //ấn E để thoát về menu
+                    this.Hide();    // ấn E để thoát về menu
                     MenuForm menuForm = new MenuForm();
                     menuForm.ShowDialog();
                 }
@@ -207,7 +207,7 @@ namespace SnakeGame
 
             if (e.KeyCode == Keys.Space)
             {
-                GameTimer.Start();    //bắt đầu timer trong game engine
+                GameTimer.Start();    // bắt đầu timer trong game engine
                 e.Handled = true;       
                 e.SuppressKeyPress = true;
                 this.Focus();
@@ -251,7 +251,7 @@ namespace SnakeGame
                     var rect = new Rectangle(p.X * GridSize, p.Y * GridSize, GridSize, GridSize);
                     if(i == 0)
                     {
-                        //VẼ ĐẦU RẮN
+                        // VẼ ĐẦU RẮN
                         Image HeadImage = GetSnakeHead(snake.CurrentDirection);
                         if(HeadImage != null)
                         {
@@ -260,7 +260,7 @@ namespace SnakeGame
                     }
                     else
                     {
-                        //VẼ THÂN RẮN
+                        // VẼ THÂN RẮN
                         g.DrawImage(SnakeBodyImage, rect);
                     }
                    
@@ -283,7 +283,7 @@ namespace SnakeGame
 
         private void TogglePause()
         {
-            if (_gameEngine.State.IsGameOver) return;   //Nếu game kết thúc thì không cho pause
+            if (_gameEngine.State.IsGameOver) return;   // Nếu game kết thúc thì không cho pause
 
             _isPaused = !_isPaused;
 
@@ -326,7 +326,7 @@ namespace SnakeGame
         private void GameForm_Closing(object sender, FormClosingEventArgs e)
         {
             GameTimer?.Stop();
-            if (_gameEngine is IDisposable d) d.Dispose(); // if it implements IDisposable
+            if (_gameEngine is IDisposable d) d.Dispose();
             FoodImage?.Dispose();
             SnakeBodyImage?.Dispose();
             SnakeHeadUpImage?.Dispose();
@@ -344,7 +344,7 @@ namespace SnakeGame
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             _gameEngine.Tick();
-            // vẽ lại giao diện
+            // Vẽ lại giao diện
             GameCanvas.Invalidate();
         }
 
@@ -366,7 +366,7 @@ namespace SnakeGame
             menuForm.ShowDialog();
         }
 
-        //Xử lý lỗi bị chuyển focus khi nhân phím mũi tên
+        // Xử lý lỗi bị chuyển focus khi nhấn phím mũi tên
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
     

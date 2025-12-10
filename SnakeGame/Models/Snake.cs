@@ -40,7 +40,7 @@ namespace SnakeGame.Models
             _directionQueue = new Queue<Direction.Huong>(MaxQueueSize);
         }
 
-        // Doi huong di chuyen với input queue buffer
+        // Đổi hướng di chuyển với input queue buffer
         public void ChangeDirection(Direction.Huong newDirection)
         {
             // Nếu queue rỗng, so sánh với CurrentDirection
@@ -60,7 +60,7 @@ namespace SnakeGame.Models
             }
         }
 
-        // Di chuyen ran - tối ưu hóa
+        // Di chuyển rắn - tối ưu hóa
         public void Move()
         {
             // Lấy hướng tiếp theo từ queue nếu có
@@ -82,7 +82,7 @@ namespace SnakeGame.Models
             Body.RemoveAt(Body.Count - 1);
         }
 
-        // Tang chieu dai ran - tối ưu
+        // Tăng chiều dài rắn - tối ưu
         public void Grow()
         {
             // Thêm segment mới tại vị trí đuôi hiện tại
@@ -91,7 +91,7 @@ namespace SnakeGame.Models
             Body.Add(tail);
         }
 
-        // Lay vector di chuyen tu huong - deprecated, dùng cache
+        // Lấy vector di chuyển từ hướng - deprecated, dùng cache
         [Obsolete("Sử dụng DirectionVectors cache thay thế")]
         private (int dx, int dy) GetVector(Direction.Huong direction)
         {
@@ -100,7 +100,7 @@ namespace SnakeGame.Models
                 : (0, 0);
         }
 
-        // Kiem tra huong moi co phai la huong nguoc lai khong - tối ưu
+        // Kiểm tra hướng mới có phải là hướng ngược lại không - tối ưu
         private bool IsOppositeDirection(Direction.Huong a, Direction.Huong b)
         {
             return OppositeDirections.ContainsKey(a) && OppositeDirections[a] == b;

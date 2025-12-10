@@ -42,18 +42,18 @@ namespace SnakeGame.Services
 
 		private void Timer_Elapsed(object sender, ElapsedEventArgs e)
 		{
-			//su dung invoke de tranh loi cross-thread
+			// Sử dụng invoke để tránh lỗi cross-thread
 			try
 			{
 				Tick();
 			}
 			catch(Exception)
 			{
-				//optional log
+				// Optional log
 			}
 		}
 
-		//Bat dau tu dong click
+		// Bắt đầu tự động click
 		public void Start()
 		{
 			lock(_sync)
@@ -65,7 +65,7 @@ namespace SnakeGame.Services
 			}
 		}
 
-		//Dung tu dong click
+		// Dừng tự động click
 		public void Stop()
 		{
 			lock(_sync)
@@ -77,7 +77,7 @@ namespace SnakeGame.Services
 			}
 		}
 
-		//Click 1 lan - huu dung cho unit test
+		// Click 1 lần - hữu dụng cho unit test
 		public bool Tick()
 		{
 			lock(_sync)
@@ -94,7 +94,7 @@ namespace SnakeGame.Services
 			}
 		}
 
-		//Doi huong di chuyen cua ran
+		// Đổi hướng di chuyển của rắn
 		public void ChangeDirection(Direction.Huong newDirection)
 		{
 			lock(_sync)
@@ -141,7 +141,7 @@ namespace SnakeGame.Services
 			}
 		}
 
-		//The loai su kien
+		// Thể loại sự kiện
 		public sealed class GameStateEventArgs : EventArgs
 		{
 			public GameState State { get; private set; }

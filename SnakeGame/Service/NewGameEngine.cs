@@ -34,10 +34,10 @@ namespace SnakeGame.Services
 
         
 
-        //Bat dau tu dong click
+        // Bắt đầu tự động click
         
 
-        //Click 1 lan - huu dung cho unit test
+        // Click 1 lần - hữu dụng cho unit test
         public bool Tick()
         {
             if (_state.IsGameOver) return false;
@@ -51,7 +51,7 @@ namespace SnakeGame.Services
             return false;
         }
 
-        //Doi huong di chuyen cua ran
+        // Đổi hướng di chuyển của rắn
         public void ChangeDirection(Direction.Huong newDirection)
         {
             if (_state.IsGameOver) return;
@@ -81,7 +81,7 @@ namespace SnakeGame.Services
 
         
 
-        //The loai su kien
+        // Thể loại sự kiện
         public sealed class GameStateEventArgs : EventArgs
         {
             public GameState State { get; private set; }
