@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
@@ -9,7 +9,7 @@ namespace SnakeGame.Database
 {
     public class TaiKhoanRepository
     {
-        // M� h�a m?t kh?u b?ng SHA256
+        // Mã hóa mật khẩu bằng SHA256
         private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -24,7 +24,7 @@ namespace SnakeGame.Database
             }
         }
 
-        // ??ng k� t�i kho?n m?i
+        // Đăng ký tài khoản mới
         public bool Register(string username, string password, string email)
         {
             try
@@ -48,16 +48,16 @@ namespace SnakeGame.Database
             }
             catch (SqlException ex)
             {
-                // Username ho?c Email ?� t?n t?i
+                // Username hoặc Email đã tồn tại
                 if (ex.Number == 2627) // Unique constraint violation
                 {
-                    throw new Exception("Username ho?c Email ?� t?n t?i!");
+                    throw new Exception("Username hoặc Email đã tồn tại!");
                 }
-                throw new Exception($"L?i ??ng k�: {ex.Message}");
+                throw new Exception($"Lỗi đăng ký: {ex.Message}");
             }
         }
 
-        // ??ng nh?p
+        // Đăng nhập
         public TaiKhoan Login(string username, string password)
         {
             try
@@ -90,15 +90,15 @@ namespace SnakeGame.Database
                         }
                     }
                 }
-                return null; // ??ng nh?p th?t b?i
+                return null; // Đăng nhập thất bại
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i ??ng nh?p: {ex.Message}");
+                throw new Exception($"Lỗi đăng nhập: {ex.Message}");
             }
         }
 
-        // Ki?m tra username ?� t?n t?i
+        // Kiểm tra username đã tồn tại
         public bool IsUsernameExists(string username)
         {
             try
@@ -118,11 +118,11 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i ki?m tra username: {ex.Message}");
+                throw new Exception($"Lỗi kiểm tra username: {ex.Message}");
             }
         }
 
-        // Ki?m tra email ?� t?n t?i
+        // Kiểm tra email đã tồn tại
         public bool IsEmailExists(string email)
         {
             try
@@ -142,11 +142,11 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i ki?m tra email: {ex.Message}");
+                throw new Exception($"Lỗi kiểm tra email: {ex.Message}");
             }
         }
 
-        // ??i m?t kh?u (cho Forgot Password)
+        // Đổi mật khẩu (cho Forgot Password)
         public bool ResetPassword(string email, string newPassword)
         {
             try
@@ -168,11 +168,11 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i ??i m?t kh?u: {ex.Message}");
+                throw new Exception($"Lỗi đổi mật khẩu: {ex.Message}");
             }
         }
 
-        // C?p nh?t ?i?m cao nh?t
+        // Cập nhật điểm cao nhất
         public bool UpdateHighestScore(int playerID, int newScore)
         {
             try
@@ -196,11 +196,11 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i c?p nh?t ?i?m: {ex.Message}");
+                throw new Exception($"Lỗi cập nhật điểm: {ex.Message}");
             }
         }
 
-        // L?y th�ng tin t�i kho?n theo ID
+        // Lấy thông tin tài khoản theo ID
         public TaiKhoan GetPlayerByID(int playerID)
         {
             try
@@ -236,7 +236,7 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i l?y th�ng tin: {ex.Message}");
+                throw new Exception($"Lỗi lấy thông tin: {ex.Message}");
             }
         }
     }
