@@ -1,4 +1,4 @@
-using System;
+﻿    using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
@@ -23,20 +23,20 @@ namespace SnakeGame.Database
                 if (string.IsNullOrEmpty(connectionString))
                 {
                     throw new InvalidOperationException(
-                        "Connection string 'SnakeGameDB' kh�ng ???c t�m th?y trong App.config.");
+                        "Connection string 'SnakeGameDB' không được tìm thấy trong App.config.");
                 }
 
                 // Connection string to master database for creating new database
                 masterConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30";
 
-                // T? ??ng t?o database n?u ch?a c�
+                // Tự động tạo database nếu chưa có
                 InitializeDatabase();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Database initialization error: {ex.Message}");
                 throw new InvalidOperationException(
-                    "L?i kh?i t?o database: " + ex.Message, ex);
+                    "Lỗi khởi tạo database: " + ex.Message, ex);
             }
         }
 
@@ -47,16 +47,16 @@ namespace SnakeGame.Database
                 string dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "QuanLyNguoiChoi.mdf");
                 string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "QuanLyNguoiChoi_log.ldf");
                 
-                // N?u database ch?a t?n t?i, t?o m?i
+                // Nếu database chưa tồn tại, tạo mới
                 if (!File.Exists(dbPath))
                 {
-                    System.Diagnostics.Debug.WriteLine("Database kh�ng t?n t?i. ?ang t?o database m?i...");
+                    System.Diagnostics.Debug.WriteLine("Database không tồn tại. Đang tạo database mới...");
                     CreateDatabase(dbPath, logPath);
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine($"Database ?� t?n t?i t?i: {dbPath}");
-                    // Ki?m tra v� t?o b?ng n?u ch?a c�
+                    System.Diagnostics.Debug.WriteLine($"Database đã tồn tại tại: {dbPath}");
+                    // Kiểm tra và tạo bảng nếu chưa có
                     EnsureTablesExist();
                 }
             }
@@ -70,12 +70,12 @@ namespace SnakeGame.Database
         {
             try
             {
-                // B??c 1: T?o database file b?ng c�ch k?t n?i master
+                // Bước 1: Tạo database file bằng cách kết nối master
                 using (SqlConnection conn = new SqlConnection(masterConnectionString))
                 {
                     conn.Open();
                     
-                    // T?o database v?i file path c? th?
+                    // Tạo database với file path cụ thể
                     string createDbQuery = $@"
                         CREATE DATABASE QuanLyNguoiChoi
                         ON PRIMARY (
@@ -100,20 +100,20 @@ namespace SnakeGame.Database
                     System.Diagnostics.Debug.WriteLine("Database file created successfully");
                 }
 
-                // B??c 2: T?o b?ng trong database m?i
+                // Bước 2: Tạo bảng trong database mới
                 CreateTables();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Create database error: {ex.Message}");
-                // N?u database ?� t?n t?i, b? qua l?i
+                // Nếu database đã tồn tại, bỏ qua lối
                 if (!ex.Message.Contains("already exists"))
                 {
                     throw;
                 }
                 else
                 {
-                    // Database ?� t?n t?i, ch? c?n t?o b?ng
+                    // Database đã tồn tại, chỉ cần tạo bảng
                     CreateTables();
                 }
             }
@@ -127,7 +127,7 @@ namespace SnakeGame.Database
                 {
                     conn.Open();
 
-                    // T?o b?ng TAIKHOAN
+                    // Tạo bảng TAIKHOAN
                     string createTaiKhoanTable = @"
                         IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'TAIKHOAN')
                         BEGIN
@@ -140,7 +140,7 @@ namespace SnakeGame.Database
                                 HighestScore INT DEFAULT 0
                             );
 
-                            -- T?o t�i kho?n m?c ??nh (username: admin, password: admin - ?� hash SHA256)
+                            -- Tạo tài khoản mặc định (username: admin, password: admin - đã hash SHA256)
                             INSERT INTO TAIKHOAN (username, matkhau, email, HighestScore)
                             VALUES ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin@snakegame.com', 0);
                         END
@@ -151,7 +151,7 @@ namespace SnakeGame.Database
                         cmd.ExecuteNonQuery();
                     }
 
-                    // T?o b?ng SCORES
+                    // Tạo bảng SCORES
                     string createScoresTable = @"
                         IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'SCORES')
                         BEGIN
@@ -212,14 +212,14 @@ namespace SnakeGame.Database
             {
                 System.Diagnostics.Debug.WriteLine($"Database connection error: {ex.Message}");
                 System.Windows.Forms.MessageBox.Show(
-                    $"Kh�ng th? k?t n?i database!\n\nL?i: {ex.Message}\n\n" +
-                    "Vui l�ng ki?m tra:\n" +
-                    "1. Visual Studio ?� c�i ??t SQL Server LocalDB\n" +
-                    "2. C� quy?n ghi file trong th? m?c ?ng d?ng\n\n" +
-                    "?? kh?c ph?c, m? Command Prompt (Run as Admin) v� ch?y:\n" +
+                    $"Không thể kết nối database!\n\nLỗi: {ex.Message}\n\n" +
+                    "Vui lòng kiểm tra:\n" +
+                    "1. Visual Studio đã cài đặt SQL Server LocalDB\n" +
+                    "2. Có quyền ghi file trong thư mục ứng dụng\n\n" +
+                    "Để khắc phục, mở Command Prompt (Run as Admin) và chạy:\n" +
                     "sqllocaldb create MSSQLLocalDB\n" +
                     "sqllocaldb start MSSQLLocalDB",
-                    "L?i k?t n?i Database",
+                    "Lỗi kết nối Database",
                     System.Windows.Forms.MessageBoxButtons.OK,
                     System.Windows.Forms.MessageBoxIcon.Error);
                 return false;
