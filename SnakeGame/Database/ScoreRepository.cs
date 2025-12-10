@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using SnakeGame.Models;
@@ -7,7 +7,7 @@ namespace SnakeGame.Database
 {
     public class ScoreRepository
     {
-        // Th�m ?i?m m?i
+        // Thêm điểm mới
         public bool AddScore(int playerID, int scoreValue)
         {
             try
@@ -30,11 +30,11 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i th�m ?i?m: {ex.Message}");
+                throw new Exception($"Lỗi thêm điểm: {ex.Message}");
             }
         }
 
-        // L?y t?t c? ?i?m c?a m?t ng??i ch?i
+        // Lấy tất cả điểm của một người chơi
         public List<Score> GetScoresByPlayerID(int playerID)
         {
             List<Score> scores = new List<Score>();
@@ -72,11 +72,11 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i l?y danh s�ch ?i?m: {ex.Message}");
+                throw new Exception($"Lỗi lấy danh sách điểm: {ex.Message}");
             }
         }
 
-        // L?y top ?i?m cao nh?t (Leaderboard)
+        // Lấy top điểm cao nhất (Leaderboard)
         public List<(string Username, int HighestScore, DateTime JoinDate)> GetTopScores(int topN = 10)
         {
             List<(string, int, DateTime)> topScores = new List<(string, int, DateTime)>();
@@ -111,11 +111,11 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i l?y b?ng x?p h?ng: {ex.Message}");
+                throw new Exception($"Lỗi lấy bảng xếp hạng: {ex.Message}");
             }
         }
 
-        // L?y ?i?m trung b�nh c?a ng??i ch?i
+        // Lấy điểm trung bình của người chơi
         public double GetAverageScore(int playerID)
         {
             try
@@ -138,11 +138,11 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i t�nh ?i?m trung b�nh: {ex.Message}");
+                throw new Exception($"Lỗi tính điểm trung bình: {ex.Message}");
             }
         }
 
-        // ??m s? l?n ch?i
+        // Đếm số lần chơi
         public int GetTotalGamesPlayed(int playerID)
         {
             try
@@ -161,7 +161,7 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                throw new Exception($"L?i ??m s? v�n ch?i: {ex.Message}");
+                throw new Exception($"Lỗi đếm số ván chơi: {ex.Message}");
             }
         }
     }
