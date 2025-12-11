@@ -57,38 +57,79 @@ namespace SnakeGame.Models
         {
             if (IsGameOver) return false;
 
-            // Di chuyển rắn phía trước
+            // Tính toán vị trí đầu rắn mới trươc khi di chuyển
+            Position nextHead = GetNextHeadPosition();
+
+            // Kiểm tra va chạm tường
+            if (nextHead.X < 0 || nextHead.X >= Columns || nextHead.Y < 0 || nextHead.Y >= Rows)
+            {
+                IsGameOver = true;
+                return false;
+            }
+
+            // Kiểm tra va chạm thân - Kiểm tra với body hiện tại(chưa di chuyển)
+            // Bỏ qua đuôi vì khi di chuyển đuôi sẽ bị xóa (trừ khi ăn)
+            for(int i = 0; i < Snake.Body.Count - 1; i++)
+            {
+                if (Snake.Body[i].Equals(nextHead))
+                {
+                    IsGameOver = true;
+                    return false;
+                }
+            }
+
+            // Kiểm tra thức ăn trước khi di chuyển
+            bool eatFood = Food.IsAt(nextHead);
+
+            // Nếu ăn thức ăn, kiểm tra đuôi
+            if (eatFood && Snake.Body[Snake.Body.Count - 1] == nextHead)
+            {
+                IsGameOver = true;
+                return false;
+            }
+
+            // Di chuyển rắn
             Snake.Move();
-            var head = Snake.Body[0];
-
-            // Kiểm tra va chạm tường (inline check nhanh hơn)
-            if (head.X < 0 || head.X >= Columns || head.Y < 0 || head.Y >= Rows)
-            {
-                IsGameOver = true;
-                return false;
-            }
-
-            // Kiểm tra va chạm thân - sử dụng HashSet thay vì LINQ (O(1) vs O(n))
-            // Chỉ kiểm tra từ phần tử thứ 1 trở đi (bỏ qua đầu)
-            UpdateBodyPositionsCache();
-            _bodyPositions.Remove(head); // Remove head trước khi check
-            
-            if (_bodyPositions.Count > 0 && _bodyPositions.Contains(head))
-            {
-                IsGameOver = true;
-                return false;
-            }
 
             // Kiểm tra ăn thức ăn
-            if (Food.IsAt(head))
+            if (eatFood)
             {
                 Snake.Grow();
                 Score += 10;
                 SpawnFood();
-                UpdateBodyPositionsCache(); // Update cache sau khi grow
             }
 
+            UpdateBodyPositionsCache(); // Update cache sau khi grow
+
             return true;
+        }
+
+        // Tính toán vị trí đầu rắn tiếp theo dựa trên hướng hiện tại
+        private Position GetNextHeadPosition()
+        {
+            var head = Snake.Body[0];
+            var direction = Snake.CurrentDirection;
+
+            //Nếu có hướng trong queue thì lấy hướng đó
+            if(Snake.PendingDirectionCount > 0)
+            {
+                //Cần lấy hướng tiếp theo từ queue để tính toán vị trí đầu rắn mới
+                direction = Snake.GetNextDirection();
+            }
+
+            switch(direction)
+            {
+                case Direction.Huong.Up:
+                    return head.Add(0, -1);
+                case Direction.Huong.Down:
+                    return head.Add(0, 1);
+                case Direction.Huong.Left:
+                    return head.Add(-1, 0);
+                case Direction.Huong.Right:
+                    return head.Add(1, 0);
+                default:
+                    return head;
+            }
         }
 
         // Update cache positions để collision detection nhanh hơn

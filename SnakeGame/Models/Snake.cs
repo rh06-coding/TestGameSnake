@@ -40,6 +40,11 @@ namespace SnakeGame.Models
             _directionQueue = new Queue<Direction.Huong>(MaxQueueSize);
         }
 
+        public Direction.Huong GetNextDirection()
+        {
+            return _directionQueue.Count > 0 ? _directionQueue.Peek() : CurrentDirection;
+        }
+
         // Đổi hướng di chuyển với input queue buffer
         public void ChangeDirection(Direction.Huong newDirection)
         {
