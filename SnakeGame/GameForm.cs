@@ -8,6 +8,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -37,6 +38,7 @@ namespace SnakeGame
         private Image OrgSnakeHead;
 
         private bool _isPaused = false; // Biến để theo dõi trạng thái tạm dừng
+        private bool _gameStarted = false; //Biến để kiếm tra game đã bắt đầu chưa
         public GameForm(int mapduocchon, int randuocchon)
         {
             this.LoaiMap = mapduocchon;
@@ -78,6 +80,8 @@ namespace SnakeGame
             _gameEngine = new NewGameEngine(columns, rows);
             _gameEngine.StateChanged += GameEngine_StateChanged;
             _gameEngine.GameOver += GameEngine_GameOver;
+
+            _gameStarted = false;
 
             // Khởi tạo ảnh
             FoodImage = Properties.Resources.DefaultSnakeFood;
@@ -207,6 +211,11 @@ namespace SnakeGame
 
             if (e.KeyCode == Keys.Space)
             {
+                if(!_gameStarted)
+                {
+                    _gameStarted = true;
+                    GameCanvas.Invalidate();
+                }
                 GameTimer.Start();    // bắt đầu timer trong game engine
                 e.Handled = true;       
                 e.SuppressKeyPress = true;
@@ -218,22 +227,18 @@ namespace SnakeGame
         private void GameCanvas_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
-
-            // KIỂM TRA 1: _gameEngine có tồn tại không?
-            if (_gameEngine == null)
+            if (_gameEngine == null)    // KIỂM TRA 1: _gameEngine có tồn tại không?
             {
                 return; // Thoát ra nếu game chưa được khởi tạo
             }
 
             var state = _gameEngine.State;
-
             if (state == null)  // KIỂM TRA 2: state có tồn tại không?
             {
                 return;
             }
 
-           var food = state.Food;    // 1. Vẽ Thức ăn (Food)
-            
+            var food = state.Food;    // 1. Vẽ Thức ăn (Food)
             if (food != null)   // KIỂM TRA 3: food có tồn tại không?
             {
                 var foodRect = new Rectangle(food.Location.X * GridSize, food.Location.Y * GridSize, GridSize, GridSize);
@@ -267,8 +272,18 @@ namespace SnakeGame
                 }
             }
 
-            // 3. Vẽ thông báo Game Over
-            if (state.IsGameOver)
+            if(!_gameStarted && !state.IsGameOver)
+            {
+                string startMessage = "Press SPACE to start";
+                var font = new Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold);
+                var size = g.MeasureString(startMessage, font);
+                var x = (GameCanvas.Width - size.Width) / 2;
+                var y = (GameCanvas.Height - size.Height) / 2;
+                g.FillRectangle(Brushes.Black, x - 10, y - 10, size.Width + 20, size.Height + 20);
+                g.DrawString(startMessage, font, Brushes.White, x, y);
+            }
+            
+            if (state.IsGameOver)   // 3. Vẽ thông báo Game Over
             {
                 string message = $"GAME OVER!\nScore: {state.Score}\nPress: \n'R' to Restart  \n'E' to Back to menu";
                 var font = new Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold);

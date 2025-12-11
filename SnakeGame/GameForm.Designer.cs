@@ -112,7 +112,7 @@
             // 
             // GameTimer
             // 
-            this.GameTimer.Interval = 250;
+            this.GameTimer.Interval = 150;
             this.GameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
             // PauseBtn
