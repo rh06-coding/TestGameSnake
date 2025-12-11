@@ -1,6 +1,7 @@
 ﻿using SnakeGame.Forms;
 using SnakeGame.Models;
 using SnakeGame.Services;
+using SnakeGame.Database;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -127,6 +128,30 @@ namespace SnakeGame
         private void GameEngine_GameOver(object sender, NewGameEngine.GameOverEventArgs e)
         {
             GameTimer.Stop();
+
+            // ⭐ AUTO-SAVE SCORE TO DATABASE
+            if (SessionManager.IsLoggedIn && e.Score > 0)
+            {
+                bool saved = SessionManager.SaveGameScore(e.Score);
+                
+                if (saved)
+                {
+                    Debug.WriteLine($"✅ Score {e.Score} đã được lưu vào database!");
+                }
+                else
+                {
+                    Debug.WriteLine($"❌ Không thể lưu score {e.Score}");
+                }
+            }
+            else if (!SessionManager.IsLoggedIn)
+            {
+                Debug.WriteLine("⚠️ User chưa đăng nhập, score không được lưu");
+            }
+            else if (e.Score <= 0)
+            {
+                Debug.WriteLine("⚠️ Score = 0, không cần lưu");
+            }
+
             ShowGameOver(e.State);
         }
 
