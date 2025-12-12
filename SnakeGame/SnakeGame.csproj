@@ -110,9 +110,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QuanLyNguoiChoiDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Service\CollisionDetector.cs" />
     <Compile Include="Service\GameEngine.cs" />
-    <Compile Include="Service\NewGameEngine.cs" />
     <EmbeddedResource Include="Forms\ForgotPasswordForm.resx">
       <DependentUpon>ForgotPasswordForm.cs</DependentUpon>
     </EmbeddedResource>

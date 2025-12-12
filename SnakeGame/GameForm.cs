@@ -22,7 +22,7 @@ namespace SnakeGame
         private int LoaiMap;    // 1: map1 (mặc định) | 2: map2
         private int MauRan;     // 1: rắn xanh lá (mặc định) | 2: rắn đỏ | 3: rắn xanh dương
 
-        private NewGameEngine _gameEngine;
+        private GameEngine _gameEngine;
         private const int GridSize = 20;
         private int columns;
         private int rows;
@@ -78,7 +78,7 @@ namespace SnakeGame
             rows = GameCanvas.Height / GridSize;
 
             // Khởi tạo game engine
-            _gameEngine = new NewGameEngine(columns, rows);
+            _gameEngine = new GameEngine(columns, rows);
             _gameEngine.StateChanged += GameEngine_StateChanged;
             _gameEngine.GameOver += GameEngine_GameOver;
 
@@ -123,13 +123,13 @@ namespace SnakeGame
             SnakeHeadRightImage = (Image)OrgSnakeHead.Clone();
         }
 
-        private void GameEngine_StateChanged(object sender, NewGameEngine.GameStateEventArgs e)
+        private void GameEngine_StateChanged(object sender, GameEngine.GameStateEventArgs e)
         {
             UpdateUI(e.State);  // Xử lý sự kiện State Changed từ GameEngine
         }
 
         // Xử lý sự kiện Game Over từ GameEngine
-        private void GameEngine_GameOver(object sender, NewGameEngine.GameOverEventArgs e)
+        private void GameEngine_GameOver(object sender, GameEngine.GameOverEventArgs e)
         {
             GameTimer.Stop();
 
