@@ -14,12 +14,14 @@ namespace SnakeGame.Models
 
         public Snake Snake { get; private set; }
         public Food Food { get; private set; }
+        public Obstacle Obstacle { get; private set; }
 
         public int Score { get; private set; }
         public bool IsGameOver { get; private set; }
 
         // Cache HashSet cho collision detection nhanh hơn
         private HashSet<Position> _bodyPositions;
+        private HashSet<Position> _obstaclePositions;
 
         public GameState(int columns, int rows)
         {
@@ -29,6 +31,7 @@ namespace SnakeGame.Models
             Columns = columns;
             Rows = rows;
             _bodyPositions = new HashSet<Position>();
+            _obstaclePositions = new HashSet<Position>();
 
             Reset();
         }
@@ -39,12 +42,42 @@ namespace SnakeGame.Models
             Score = 0;
             var start = new Position(Columns / 2, Rows / 2);
             Snake = new Snake(start, Direction.Huong.Right);
-            Snake.ClearDirectionQueue(); // Clear input queue khi reset
+            Snake.ClearDirectionQueue();
+            
+            // Khởi tạo chướng ngại vật
+            Obstacle = new Obstacle();
+            
             Food = new Food();
             SpawnFood();
             
             // Update cache
             UpdateBodyPositionsCache();
+            UpdateObstaclePositionsCache();
+        }
+
+        // Phương thức để tạo chướng ngại vật (có thể gọi từ GameForm)
+        public void GenerateObstacles(int patternType = 0, int obstacleCount = 5)
+        {
+            if (patternType == 0)
+            {
+                // Ngẫu nhiên
+                var occupied = new List<Position>(Snake.Body);
+                occupied.Add(Food.Location);
+                Obstacle.GenerateObstacles(Columns, Rows, occupied, obstacleCount);
+            }
+            else
+            {
+                // Theo mẫu
+                Obstacle.GeneratePatternObstacles(Columns, Rows, patternType);
+            }
+            
+            UpdateObstaclePositionsCache();
+            
+            // Đảm bảo food không spawn trên obstacle
+            if (Obstacle.IsAt(Food.Location))
+            {
+                SpawnFood();
+            }
         }
 
         public void ChangeDirection(Direction.Huong newDirection)
@@ -62,6 +95,13 @@ namespace SnakeGame.Models
 
             // Kiểm tra va chạm tường
             if (nextHead.X < 0 || nextHead.X >= Columns || nextHead.Y < 0 || nextHead.Y >= Rows)
+            {
+                IsGameOver = true;
+                return false;
+            }
+
+            // Kiểm tra va chạm chướng ngại vật
+            if (_obstaclePositions.Contains(nextHead))
             {
                 IsGameOver = true;
                 return false;
@@ -143,9 +183,29 @@ namespace SnakeGame.Models
             }
         }
 
+        // Update cache cho chướng ngại vật
+        private void UpdateObstaclePositionsCache()
+        {
+            _obstaclePositions.Clear();
+            if (Obstacle != null && Obstacle.Positions != null)
+            {
+                foreach (var pos in Obstacle.Positions)
+                {
+                    _obstaclePositions.Add(pos);
+                }
+            }
+        }
+
         private void SpawnFood()
         {
-            Food.PlaceAtRandom(Columns, Rows, Snake.Body);
+            // Tạo danh sách các vị trí đã bị chiếm
+            var occupied = new List<Position>(Snake.Body);
+            if (Obstacle != null && Obstacle.Positions != null)
+            {
+                occupied.AddRange(Obstacle.Positions);
+            }
+            
+            Food.PlaceAtRandom(Columns, Rows, occupied);
         }
     }
 }
