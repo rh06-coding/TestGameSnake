@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SnakeGame.Database;
 using SnakeGame.Models;
+using SnakeGame.Validation;
 
 namespace SnakeGame.Forms
 {
@@ -40,9 +41,10 @@ namespace SnakeGame.Forms
             string username = UsernameTxt.Text.Trim();
             string password = passwordTxt.Text;
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            var validationResult = TaiKhoanValidator.ValidateLogin(username, password);
+            if (!validationResult.IsValid)
             {
-                MessageBox.Show("Vui lòng nhập username/email và mật khẩu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(validationResult.ErrorMessage, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

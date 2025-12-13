@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
 using SnakeGame.Models;
+using SnakeGame.Validation;
 
 namespace SnakeGame.Database
 {
@@ -27,6 +28,12 @@ namespace SnakeGame.Database
         // Đăng ký tài khoản mới
         public bool Register(string username, string password, string email)
         {
+            var validationResult = TaiKhoanValidator.ValidateRegistration(username, password, email);
+            if (!validationResult.IsValid)
+            {
+                throw new ArgumentException(validationResult.ErrorMessage);
+            }
+
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -60,6 +67,12 @@ namespace SnakeGame.Database
         // Đăng nhập
         public TaiKhoan Login(string username, string password)
         {
+            var validationResult = TaiKhoanValidator.ValidateLogin(username, password);
+            if (!validationResult.IsValid)
+            {
+                throw new ArgumentException(validationResult.ErrorMessage);
+            }
+
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -101,6 +114,11 @@ namespace SnakeGame.Database
         // Kiểm tra username đã tồn tại
         public bool IsUsernameExists(string username)
         {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                throw new ArgumentException("Username không được để trống");
+            }
+
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -125,6 +143,12 @@ namespace SnakeGame.Database
         // Kiểm tra email đã tồn tại
         public bool IsEmailExists(string email)
         {
+            var validationResult = TaiKhoanValidator.ValidateEmail(email);
+            if (!validationResult.IsValid)
+            {
+                throw new ArgumentException(validationResult.ErrorMessage);
+            }
+
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -149,6 +173,18 @@ namespace SnakeGame.Database
         // Đổi mật khẩu (cho Forgot Password)
         public bool ResetPassword(string email, string newPassword)
         {
+            var emailResult = TaiKhoanValidator.ValidateEmail(email);
+            if (!emailResult.IsValid)
+            {
+                throw new ArgumentException(emailResult.ErrorMessage);
+            }
+
+            var passwordResult = TaiKhoanValidator.ValidatePasswordSimple(newPassword);
+            if (!passwordResult.IsValid)
+            {
+                throw new ArgumentException(passwordResult.ErrorMessage);
+            }
+
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -175,6 +211,18 @@ namespace SnakeGame.Database
         // Cập nhật điểm cao nhất
         public bool UpdateHighestScore(int playerID, int newScore)
         {
+            var playerIdResult = TaiKhoanValidator.ValidatePlayerID(playerID);
+            if (!playerIdResult.IsValid)
+            {
+                throw new ArgumentException(playerIdResult.ErrorMessage);
+            }
+
+            var scoreResult = TaiKhoanValidator.ValidateScore(newScore);
+            if (!scoreResult.IsValid)
+            {
+                throw new ArgumentException(scoreResult.ErrorMessage);
+            }
+
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -203,6 +251,12 @@ namespace SnakeGame.Database
         // Lấy thông tin tài khoản theo ID
         public TaiKhoan GetPlayerByID(int playerID)
         {
+            var validationResult = TaiKhoanValidator.ValidatePlayerID(playerID);
+            if (!validationResult.IsValid)
+            {
+                throw new ArgumentException(validationResult.ErrorMessage);
+            }
+
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())

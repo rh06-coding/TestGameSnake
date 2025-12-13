@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SnakeGame.Database;
+using SnakeGame.Validation;
 
 namespace SnakeGame.Forms
 {
@@ -26,21 +27,17 @@ namespace SnakeGame.Forms
             string email = EmailTxt.Text.Trim();
             string newPassword = ResetPasswordTxt.Text;
 
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(newPassword))
+            var emailResult = TaiKhoanValidator.ValidateEmail(email);
+            if (!emailResult.IsValid)
             {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(emailResult.ErrorMessage, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!IsValidEmail(email))
+            var passwordResult = TaiKhoanValidator.ValidatePasswordSimple(newPassword);
+            if (!passwordResult.IsValid)
             {
-                MessageBox.Show("Email không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (newPassword.Length < 6)
-            {
-                MessageBox.Show("Mật khẩu mới phải có ít nhất 6 ký tự!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(passwordResult.ErrorMessage, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -66,19 +63,6 @@ namespace SnakeGame.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
             }
         }
     }

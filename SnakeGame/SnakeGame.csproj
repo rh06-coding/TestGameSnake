@@ -118,6 +118,8 @@
       <DependentUpon>QuanLyNguoiChoiDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Service\GameEngine.cs" />
+    <Compile Include="Validation\TaiKhoanValidator.cs" />
+    <Compile Include="Validation\ValidationResult.cs" />
     <EmbeddedResource Include="Forms\ForgotPasswordForm.resx">
       <DependentUpon>ForgotPasswordForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -190,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
