@@ -50,5 +50,17 @@ namespace SnakeGame.Forms
             this.Hide();
             form.ShowDialog();
         }
+
+        private void btnQuitGame_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnLeaderBoard_Click(object sender, EventArgs e)
+        {
+            LeaderBoardForm LeaderBoardform = new LeaderBoardForm();
+            this.Hide();
+            LeaderBoardform.ShowDialog();
+        }
     }
 }
