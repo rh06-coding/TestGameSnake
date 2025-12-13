@@ -72,6 +72,12 @@
     <Compile Include="Forms\ForgotPasswordForm.Designer.cs">
       <DependentUpon>ForgotPasswordForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LeaderBoardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LeaderBoardForm.Designer.cs">
+      <DependentUpon>LeaderBoardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +120,9 @@
     <Compile Include="Service\GameEngine.cs" />
     <EmbeddedResource Include="Forms\ForgotPasswordForm.resx">
       <DependentUpon>ForgotPasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LeaderBoardForm.resx">
+      <DependentUpon>LeaderBoardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MenuForm.resx">
       <DependentUpon>MenuForm.cs</DependentUpon>
@@ -165,6 +174,8 @@
     <None Include="Resources\SnakeGameStartScreen.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Background_icon\GameBackground1_ic.png" />
+    <Content Include="Resources\Background_icon\GameBackground2_ic.jpg" />
     <Content Include="Resources\BlueSnake\bluebody.png" />
     <Content Include="Resources\BlueSnake\bluehead.png" />
     <Content Include="Resources\DefaultSnake\Body.png" />
