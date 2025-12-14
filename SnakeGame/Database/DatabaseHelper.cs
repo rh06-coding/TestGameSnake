@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
@@ -9,12 +9,12 @@ namespace SnakeGame.Database
     {
         private static string connectionString;
         private static string masterConnectionString;
+        private static bool useLocalDb = true;
 
         static DatabaseHelper()
         {
             try
             {
-                // Set DataDirectory to app folder
                 string appPath = AppDomain.CurrentDomain.BaseDirectory;
                 AppDomain.CurrentDomain.SetData("DataDirectory", appPath);
 
@@ -22,21 +22,36 @@ namespace SnakeGame.Database
                 
                 if (string.IsNullOrEmpty(connectionString))
                 {
-                    throw new InvalidOperationException(
-                        "Connection string 'SnakeGameDB' không được tìm thấy trong App.config.");
+                    connectionString = ConfigurationManager.ConnectionStrings["SnakeGame.Properties.Settings.QuanLyNguoiChoiConnectionString"]?.ConnectionString;
                 }
 
-                // Connection string to master database for creating new database
-                masterConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30";
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|QuanLyNguoiChoi.mdf;Integrated Security=True;Connect Timeout=30";
+                    System.Diagnostics.Debug.WriteLine("Using default LocalDB connection string");
+                }
 
-                // Tự động tạo database nếu chưa có
+                connectionString = connectionString.Replace("|DataDirectory|", appPath).Replace("\\\\", "\\");
+
+                useLocalDb = connectionString.Contains("LocalDB") || connectionString.Contains("AttachDbFilename");
+                
+                if (useLocalDb)
+                {
+                    masterConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30";
+                }
+                else
+                {
+                    SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
+                    builder.InitialCatalog = "master";
+                    masterConnectionString = builder.ConnectionString;
+                }
+
                 InitializeDatabase();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Database initialization error: {ex.Message}");
-                throw new InvalidOperationException(
-                    "Lỗi khởi tạo database: " + ex.Message, ex);
+                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
             }
         }
 
@@ -44,38 +59,84 @@ namespace SnakeGame.Database
         {
             try
             {
-                string dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "QuanLyNguoiChoi.mdf");
-                string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "QuanLyNguoiChoi_log.ldf");
-                
-                // Nếu database chưa tồn tại, tạo mới
-                if (!File.Exists(dbPath))
+                if (useLocalDb)
                 {
-                    System.Diagnostics.Debug.WriteLine("Database không tồn tại. Đang tạo database mới...");
-                    CreateDatabase(dbPath, logPath);
+                    string dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "QuanLyNguoiChoi.mdf");
+                    string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "QuanLyNguoiChoi_log.ldf");
+                    
+                    if (!File.Exists(dbPath))
+                    {
+                        System.Diagnostics.Debug.WriteLine("Database không tồn tại. Đang tạo database mới...");
+                        CreateLocalDatabase(dbPath, logPath);
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Database đã tồn tại tại: {dbPath}");
+                        DetachExistingDatabase();
+                        EnsureTablesExist();
+                    }
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine($"Database đã tồn tại tại: {dbPath}");
-                    // Kiểm tra và tạo bảng nếu chưa có
+                    System.Diagnostics.Debug.WriteLine("Using SQL Server instance, checking tables...");
                     EnsureTablesExist();
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Initialize database error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
             }
         }
 
-        private static void CreateDatabase(string dbPath, string logPath)
+        private static void DetachExistingDatabase()
         {
             try
             {
-                // Bước 1: Tạo database file bằng cách kết nối master
                 using (SqlConnection conn = new SqlConnection(masterConnectionString))
                 {
                     conn.Open();
                     
-                    // Tạo database với file path cụ thể
+                    string checkDbQuery = "SELECT COUNT(*) FROM sys.databases WHERE name = 'QuanLyNguoiChoi'";
+                    using (SqlCommand checkCmd = new SqlCommand(checkDbQuery, conn))
+                    {
+                        int dbExists = (int)checkCmd.ExecuteScalar();
+                        
+                        if (dbExists > 0)
+                        {
+                            System.Diagnostics.Debug.WriteLine("Detaching existing database...");
+                            
+                            string detachQuery = @"
+                                ALTER DATABASE QuanLyNguoiChoi SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+                                EXEC sp_detach_db 'QuanLyNguoiChoi', 'true';
+                            ";
+                            
+                            using (SqlCommand detachCmd = new SqlCommand(detachQuery, conn))
+                            {
+                                detachCmd.ExecuteNonQuery();
+                            }
+                            
+                            System.Diagnostics.Debug.WriteLine("Database detached successfully");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Detach database warning: {ex.Message}");
+            }
+        }
+
+        private static void CreateLocalDatabase(string dbPath, string logPath)
+        {
+            try
+            {
+                DetachExistingDatabase();
+                
+                using (SqlConnection conn = new SqlConnection(masterConnectionString))
+                {
+                    conn.Open();
+                    
                     string createDbQuery = $@"
                         CREATE DATABASE QuanLyNguoiChoi
                         ON PRIMARY (
@@ -100,21 +161,29 @@ namespace SnakeGame.Database
                     System.Diagnostics.Debug.WriteLine("Database file created successfully");
                 }
 
-                // Bước 2: Tạo bảng trong database mới
+                System.Threading.Thread.Sleep(1000);
+                
                 CreateTables();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Create database error: {ex.Message}");
-                // Nếu database đã tồn tại, bỏ qua lối
-                if (!ex.Message.Contains("already exists"))
+                
+                if (ex.Message.Contains("already exists") || File.Exists(dbPath))
                 {
-                    throw;
+                    System.Diagnostics.Debug.WriteLine("Database already exists, ensuring tables...");
+                    try
+                    {
+                        CreateTables();
+                    }
+                    catch (Exception innerEx)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Failed to create tables after database exists: {innerEx.Message}");
+                    }
                 }
                 else
                 {
-                    // Database đã tồn tại, chỉ cần tạo bảng
-                    CreateTables();
+                    throw;
                 }
             }
         }
@@ -127,7 +196,6 @@ namespace SnakeGame.Database
                 {
                     conn.Open();
 
-                    // Tạo bảng TAIKHOAN
                     string createTaiKhoanTable = @"
                         IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'TAIKHOAN')
                         BEGIN
@@ -140,9 +208,10 @@ namespace SnakeGame.Database
                                 HighestScore INT DEFAULT 0
                             );
 
-                            -- Tạo tài khoản mặc định (username: admin, password: admin - đã hash SHA256)
                             INSERT INTO TAIKHOAN (username, matkhau, email, HighestScore)
                             VALUES ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin@snakegame.com', 0);
+                            
+                            PRINT 'Bảng TAIKHOAN đã được tạo với tài khoản admin mặc định';
                         END
                     ";
 
@@ -151,7 +220,6 @@ namespace SnakeGame.Database
                         cmd.ExecuteNonQuery();
                     }
 
-                    // Tạo bảng SCORES
                     string createScoresTable = @"
                         IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'SCORES')
                         BEGIN
@@ -161,8 +229,10 @@ namespace SnakeGame.Database
                                 score INT NOT NULL,
                                 AchievedAt DATETIME DEFAULT GETDATE(),
                                 CONSTRAINT FK_SCORES_TAIKHOAN FOREIGN KEY (player_ID) 
-                                    REFERENCES TAIKHOAN(player_ID)
+                                    REFERENCES TAIKHOAN(player_ID) ON DELETE CASCADE
                             );
+                            
+                            PRINT 'Bảng SCORES đã được tạo';
                         END
                     ";
 
@@ -171,12 +241,13 @@ namespace SnakeGame.Database
                         cmd.ExecuteNonQuery();
                     }
 
-                    System.Diagnostics.Debug.WriteLine("Database tables created successfully with default account (username: admin, password: admin)");
+                    System.Diagnostics.Debug.WriteLine("Database tables created successfully");
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Create tables error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -185,11 +256,43 @@ namespace SnakeGame.Database
         {
             try
             {
-                CreateTables();
+                using (SqlConnection conn = GetConnection())
+                {
+                    conn.Open();
+
+                    string checkTables = @"
+                        SELECT COUNT(*) FROM sys.tables 
+                        WHERE name IN ('TAIKHOAN', 'SCORES')
+                    ";
+
+                    using (SqlCommand cmd = new SqlCommand(checkTables, conn))
+                    {
+                        int tableCount = (int)cmd.ExecuteScalar();
+                        
+                        if (tableCount < 2)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Chỉ tìm thấy {tableCount} bảng, đang tạo bảng còn thiếu...");
+                            CreateTables();
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine("Tất cả bảng đã tồn tại");
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Ensure tables exist error: {ex.Message}");
+                
+                try
+                {
+                    CreateTables();
+                }
+                catch (Exception innerEx)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Failed to create tables: {innerEx.Message}");
+                }
             }
         }
 
@@ -205,25 +308,71 @@ namespace SnakeGame.Database
                 using (SqlConnection conn = GetConnection())
                 {
                     conn.Open();
+                    
+                    string testQuery = "SELECT COUNT(*) FROM sys.tables WHERE name = 'TAIKHOAN'";
+                    using (SqlCommand cmd = new SqlCommand(testQuery, conn))
+                    {
+                        int count = (int)cmd.ExecuteScalar();
+                        if (count == 0)
+                        {
+                            System.Diagnostics.Debug.WriteLine("Bảng TAIKHOAN chưa tồn tại, đang tạo...");
+                            conn.Close();
+                            CreateTables();
+                        }
+                    }
+                    
+                    System.Diagnostics.Debug.WriteLine("Kết nối database thành công!");
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch (SqlException sqlEx)
             {
-                System.Diagnostics.Debug.WriteLine($"Database connection error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"SQL Error: {sqlEx.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error Number: {sqlEx.Number}");
+                
+                string errorMessage = "Không thể kết nối database!\n\n";
+                errorMessage += $"Lỗi: {sqlEx.Message}\n\n";
+                
+                if (useLocalDb)
+                {
+                    errorMessage += "Vui lòng kiểm tra:\n";
+                    errorMessage += "1. Visual Studio đã cài đặt SQL Server LocalDB\n";
+                    errorMessage += "2. Có quyền ghi file trong thư mục ứng dụng\n\n";
+                    errorMessage += "Để khắc phục, mở Command Prompt (Run as Admin) và chạy:\n";
+                    errorMessage += "sqllocaldb create MSSQLLocalDB\n";
+                    errorMessage += "sqllocaldb start MSSQLLocalDB";
+                }
+                else
+                {
+                    errorMessage += "Vui lòng kiểm tra:\n";
+                    errorMessage += "1. SQL Server đang chạy\n";
+                    errorMessage += "2. Connection string trong App.config đúng\n";
+                    errorMessage += "3. Database 'QuanLyNguoiChoi' đã được tạo\n";
+                    errorMessage += "4. Tài khoản Windows có quyền truy cập database";
+                }
+                
                 System.Windows.Forms.MessageBox.Show(
-                    $"Không thể kết nối database!\n\nLỗi: {ex.Message}\n\n" +
-                    "Vui lòng kiểm tra:\n" +
-                    "1. Visual Studio đã cài đặt SQL Server LocalDB\n" +
-                    "2. Có quyền ghi file trong thư mục ứng dụng\n\n" +
-                    "Để khắc phục, mở Command Prompt (Run as Admin) và chạy:\n" +
-                    "sqllocaldb create MSSQLLocalDB\n" +
-                    "sqllocaldb start MSSQLLocalDB",
+                    errorMessage,
                     "Lỗi kết nối Database",
                     System.Windows.Forms.MessageBoxButtons.OK,
                     System.Windows.Forms.MessageBoxIcon.Error);
                 return false;
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Database connection error: {ex.Message}");
+                System.Windows.Forms.MessageBox.Show(
+                    $"Lỗi không xác định khi kết nối database!\n\n{ex.Message}",
+                    "Lỗi Database",
+                    System.Windows.Forms.MessageBoxButtons.OK,
+                    System.Windows.Forms.MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public static string GetConnectionInfo()
+        {
+            return $"Connection String: {connectionString}\nMode: {(useLocalDb ? "LocalDB" : "SQL Server")}";
         }
     }
 }

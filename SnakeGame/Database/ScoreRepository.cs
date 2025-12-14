@@ -28,8 +28,14 @@ namespace SnakeGame.Database
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in AddScore: {ex.Message}");
+                throw new Exception($"Lỗi thêm điểm: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in AddScore: {ex.Message}");
                 throw new Exception($"Lỗi thêm điểm: {ex.Message}");
             }
         }
@@ -70,8 +76,14 @@ namespace SnakeGame.Database
                 }
                 return scores;
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in GetScoresByPlayerID: {ex.Message}");
+                throw new Exception($"Lỗi lấy danh sách điểm: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in GetScoresByPlayerID: {ex.Message}");
                 throw new Exception($"Lỗi lấy danh sách điểm: {ex.Message}");
             }
         }
@@ -109,8 +121,14 @@ namespace SnakeGame.Database
                 }
                 return topScores;
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in GetTopScores: {ex.Message}");
+                throw new Exception($"Lỗi lấy bảng xếp hạng: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in GetTopScores: {ex.Message}");
                 throw new Exception($"Lỗi lấy bảng xếp hạng: {ex.Message}");
             }
         }
@@ -136,8 +154,14 @@ namespace SnakeGame.Database
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in GetAverageScore: {ex.Message}");
+                throw new Exception($"Lỗi tính điểm trung bình: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in GetAverageScore: {ex.Message}");
                 throw new Exception($"Lỗi tính điểm trung bình: {ex.Message}");
             }
         }
@@ -159,8 +183,14 @@ namespace SnakeGame.Database
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in GetTotalGamesPlayed: {ex.Message}");
+                throw new Exception($"Lỗi đếm số ván chơi: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in GetTotalGamesPlayed: {ex.Message}");
                 throw new Exception($"Lỗi đếm số ván chơi: {ex.Message}");
             }
         }

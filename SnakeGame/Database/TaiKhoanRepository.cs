@@ -60,7 +60,13 @@ namespace SnakeGame.Database
                 {
                     throw new Exception("Username hoặc Email đã tồn tại!");
                 }
+                System.Diagnostics.Debug.WriteLine($"SQL Error in Register: {ex.Message}");
                 throw new Exception($"Lỗi đăng ký: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in Register: {ex.Message}");
+                throw new Exception($"Lỗi kết nối database: {ex.Message}");
             }
         }
 
@@ -105,8 +111,14 @@ namespace SnakeGame.Database
                 }
                 return null; // Đăng nhập thất bại
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in Login: {ex.Message}");
+                throw new Exception($"Lỗi đăng nhập: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in Login: {ex.Message}");
                 throw new Exception($"Lỗi đăng nhập: {ex.Message}");
             }
         }
@@ -134,8 +146,14 @@ namespace SnakeGame.Database
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in IsUsernameExists: {ex.Message}");
+                throw new Exception($"Lỗi kiểm tra username: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in IsUsernameExists: {ex.Message}");
                 throw new Exception($"Lỗi kiểm tra username: {ex.Message}");
             }
         }
@@ -164,8 +182,14 @@ namespace SnakeGame.Database
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in IsEmailExists: {ex.Message}");
+                throw new Exception($"Lỗi kiểm tra email: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in IsEmailExists: {ex.Message}");
                 throw new Exception($"Lỗi kiểm tra email: {ex.Message}");
             }
         }
@@ -202,8 +226,14 @@ namespace SnakeGame.Database
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in ResetPassword: {ex.Message}");
+                throw new Exception($"Lỗi đổi mật khẩu: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in ResetPassword: {ex.Message}");
                 throw new Exception($"Lỗi đổi mật khẩu: {ex.Message}");
             }
         }
@@ -242,8 +272,14 @@ namespace SnakeGame.Database
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in UpdateHighestScore: {ex.Message}");
+                throw new Exception($"Lỗi cập nhật điểm: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in UpdateHighestScore: {ex.Message}");
                 throw new Exception($"Lỗi cập nhật điểm: {ex.Message}");
             }
         }
@@ -288,8 +324,14 @@ namespace SnakeGame.Database
                 }
                 return null;
             }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in GetPlayerByID: {ex.Message}");
+                throw new Exception($"Lỗi lấy thông tin: Không thể kết nối database");
+            }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error in GetPlayerByID: {ex.Message}");
                 throw new Exception($"Lỗi lấy thông tin: {ex.Message}");
             }
         }
