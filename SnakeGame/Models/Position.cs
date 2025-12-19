@@ -8,8 +8,8 @@ namespace SnakeGame.Models
 {
     internal struct Position : IEquatable<Position>
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get; }
+        public int Y { get; }
 
         public Position(int x, int y)
         {
@@ -17,17 +17,18 @@ namespace SnakeGame.Models
             Y = y;
         }
 
-        //Cong vi tri vector(dx, dy)
-        public Position Add (int dx, int dy)
+        // Cộng vị trí vector(dx, dy)
+        public Position Add(int dx, int dy)
         {
             return new Position(X + dx, Y + dy);
         }
+
         public static Position operator +(Position pos, (int dx, int dy) vector)
         {
             return new Position(pos.X + vector.dx, pos.Y + vector.dy);
         }
 
-        //so sanh bang nhau
+        // So sánh bằng nhau - tối ưu
         public override bool Equals(object obj)
         {
             return obj is Position other && Equals(other);
@@ -38,22 +39,29 @@ namespace SnakeGame.Models
             return X == other.X && Y == other.Y;
         }
 
+        // GetHashCode tối ưu cho HashSet - sử dụng thuật toán tốt hơn
         public override int GetHashCode()
         {
             unchecked
             {
-                return (X * 397) ^ Y;
+                // Sử dụng prime numbers để giảm collision
+                int hash = 17;
+                hash = hash * 31 + X;
+                hash = hash * 31 + Y;
+                return hash;
             }
         }
 
-        public static bool operator == (Position left, Position right)
+        public static bool operator ==(Position left, Position right)
         {
             return left.Equals(right);
         }
+
         public static bool operator !=(Position left, Position right)
         {
-            return !(left == right);
+            return !left.Equals(right);
         }
+
         public override string ToString()
         {
             return $"({X}, {Y})";
