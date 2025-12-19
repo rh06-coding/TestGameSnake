@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SnakeGame.Sounds;
 
 namespace SnakeGame.Models
 {
@@ -98,7 +97,6 @@ namespace SnakeGame.Models
             if (nextHead.X < 0 || nextHead.X >= Columns || nextHead.Y < 0 || nextHead.Y >= Rows)
             {
                 IsGameOver = true;
-
                 return false;
             }
 
@@ -106,7 +104,6 @@ namespace SnakeGame.Models
             if (_obstaclePositions.Contains(nextHead))
             {
                 IsGameOver = true;
-                SoundService.PlayLose();
                 return false;
             }
 
@@ -137,7 +134,6 @@ namespace SnakeGame.Models
             // Kiểm tra ăn thức ăn
             if (eatFood)
             {
-                SoundService.PlayEat();
                 Snake.Grow();
                 Score += 10;
                 SpawnFood();
