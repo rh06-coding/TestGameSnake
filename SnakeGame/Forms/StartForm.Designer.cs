@@ -123,6 +123,7 @@
             this.Controls.Add(this.Label);
             this.Controls.Add(this.passwordTxt);
             this.Controls.Add(this.UsernameTxt);
+            this.DoubleBuffered = true;
             this.Name = "StartForm";
             this.Text = "StartForm";
             this.ResumeLayout(false);
