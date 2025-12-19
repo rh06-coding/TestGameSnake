@@ -136,14 +136,8 @@
   <data name="GameBackground1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GameBackground\GameBackground1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GameBackground1_ic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Background_icon\GameBackground1_ic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="GameBackground2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GameBackground\GameBackground2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="GameBackground2_ic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Background_icon\GameBackground2_ic.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon.ico;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
