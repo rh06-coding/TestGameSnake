@@ -1,16 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
 using SnakeGame.Models;
-using SnakeGame.Validation;
 
 namespace SnakeGame.Database
 {
     public class TaiKhoanRepository
     {
-        // Mã hóa mật khẩu bằng SHA256
+        // M� h�a m?t kh?u b?ng SHA256
         private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -25,15 +24,9 @@ namespace SnakeGame.Database
             }
         }
 
-        // Đăng ký tài khoản mới
+        // ??ng k� t�i kho?n m?i
         public bool Register(string username, string password, string email)
         {
-            var validationResult = TaiKhoanValidator.ValidateRegistration(username, password, email);
-            if (!validationResult.IsValid)
-            {
-                throw new ArgumentException(validationResult.ErrorMessage);
-            }
-
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -55,30 +48,18 @@ namespace SnakeGame.Database
             }
             catch (SqlException ex)
             {
-                // Username hoặc Email đã tồn tại
+                // Username ho?c Email ?� t?n t?i
                 if (ex.Number == 2627) // Unique constraint violation
                 {
-                    throw new Exception("Username hoặc Email đã tồn tại!");
+                    throw new Exception("Username ho?c Email ?� t?n t?i!");
                 }
-                System.Diagnostics.Debug.WriteLine($"SQL Error in Register: {ex.Message}");
-                throw new Exception($"Lỗi đăng ký: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error in Register: {ex.Message}");
-                throw new Exception($"Lỗi kết nối database: {ex.Message}");
+                throw new Exception($"L?i ??ng k�: {ex.Message}");
             }
         }
 
-        // Đăng nhập
+        // ??ng nh?p
         public TaiKhoan Login(string username, string password)
         {
-            var validationResult = TaiKhoanValidator.ValidateLogin(username, password);
-            if (!validationResult.IsValid)
-            {
-                throw new ArgumentException(validationResult.ErrorMessage);
-            }
-
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -109,28 +90,17 @@ namespace SnakeGame.Database
                         }
                     }
                 }
-                return null; // Đăng nhập thất bại
-            }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in Login: {ex.Message}");
-                throw new Exception($"Lỗi đăng nhập: Không thể kết nối database");
+                return null; // ??ng nh?p th?t b?i
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in Login: {ex.Message}");
-                throw new Exception($"Lỗi đăng nhập: {ex.Message}");
+                throw new Exception($"L?i ??ng nh?p: {ex.Message}");
             }
         }
 
-        // Kiểm tra username đã tồn tại
+        // Ki?m tra username ?� t?n t?i
         public bool IsUsernameExists(string username)
         {
-            if (string.IsNullOrWhiteSpace(username))
-            {
-                throw new ArgumentException("Username không được để trống");
-            }
-
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -146,27 +116,15 @@ namespace SnakeGame.Database
                     }
                 }
             }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in IsUsernameExists: {ex.Message}");
-                throw new Exception($"Lỗi kiểm tra username: Không thể kết nối database");
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in IsUsernameExists: {ex.Message}");
-                throw new Exception($"Lỗi kiểm tra username: {ex.Message}");
+                throw new Exception($"L?i ki?m tra username: {ex.Message}");
             }
         }
 
-        // Kiểm tra email đã tồn tại
+        // Ki?m tra email ?� t?n t?i
         public bool IsEmailExists(string email)
         {
-            var validationResult = TaiKhoanValidator.ValidateEmail(email);
-            if (!validationResult.IsValid)
-            {
-                throw new ArgumentException(validationResult.ErrorMessage);
-            }
-
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -182,33 +140,15 @@ namespace SnakeGame.Database
                     }
                 }
             }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in IsEmailExists: {ex.Message}");
-                throw new Exception($"Lỗi kiểm tra email: Không thể kết nối database");
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in IsEmailExists: {ex.Message}");
-                throw new Exception($"Lỗi kiểm tra email: {ex.Message}");
+                throw new Exception($"L?i ki?m tra email: {ex.Message}");
             }
         }
 
-        // Đổi mật khẩu (cho Forgot Password)
+        // ??i m?t kh?u (cho Forgot Password)
         public bool ResetPassword(string email, string newPassword)
         {
-            var emailResult = TaiKhoanValidator.ValidateEmail(email);
-            if (!emailResult.IsValid)
-            {
-                throw new ArgumentException(emailResult.ErrorMessage);
-            }
-
-            var passwordResult = TaiKhoanValidator.ValidatePasswordSimple(newPassword);
-            if (!passwordResult.IsValid)
-            {
-                throw new ArgumentException(passwordResult.ErrorMessage);
-            }
-
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -226,33 +166,15 @@ namespace SnakeGame.Database
                     }
                 }
             }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in ResetPassword: {ex.Message}");
-                throw new Exception($"Lỗi đổi mật khẩu: Không thể kết nối database");
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in ResetPassword: {ex.Message}");
-                throw new Exception($"Lỗi đổi mật khẩu: {ex.Message}");
+                throw new Exception($"L?i ??i m?t kh?u: {ex.Message}");
             }
         }
 
-        // Cập nhật điểm cao nhất
+        // C?p nh?t ?i?m cao nh?t
         public bool UpdateHighestScore(int playerID, int newScore)
         {
-            var playerIdResult = TaiKhoanValidator.ValidatePlayerID(playerID);
-            if (!playerIdResult.IsValid)
-            {
-                throw new ArgumentException(playerIdResult.ErrorMessage);
-            }
-
-            var scoreResult = TaiKhoanValidator.ValidateScore(newScore);
-            if (!scoreResult.IsValid)
-            {
-                throw new ArgumentException(scoreResult.ErrorMessage);
-            }
-
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -272,27 +194,15 @@ namespace SnakeGame.Database
                     }
                 }
             }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in UpdateHighestScore: {ex.Message}");
-                throw new Exception($"Lỗi cập nhật điểm: Không thể kết nối database");
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in UpdateHighestScore: {ex.Message}");
-                throw new Exception($"Lỗi cập nhật điểm: {ex.Message}");
+                throw new Exception($"L?i c?p nh?t ?i?m: {ex.Message}");
             }
         }
 
-        // Lấy thông tin tài khoản theo ID
+        // L?y th�ng tin t�i kho?n theo ID
         public TaiKhoan GetPlayerByID(int playerID)
         {
-            var validationResult = TaiKhoanValidator.ValidatePlayerID(playerID);
-            if (!validationResult.IsValid)
-            {
-                throw new ArgumentException(validationResult.ErrorMessage);
-            }
-
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
@@ -324,15 +234,9 @@ namespace SnakeGame.Database
                 }
                 return null;
             }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in GetPlayerByID: {ex.Message}");
-                throw new Exception($"Lỗi lấy thông tin: Không thể kết nối database");
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in GetPlayerByID: {ex.Message}");
-                throw new Exception($"Lỗi lấy thông tin: {ex.Message}");
+                throw new Exception($"L?i l?y th�ng tin: {ex.Message}");
             }
         }
     }

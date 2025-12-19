@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SnakeGame.Database;
 using SnakeGame.Models;
-using SnakeGame.Validation;
+using SnakeGame.Service;
 
 namespace SnakeGame.Forms
 {
@@ -20,31 +20,40 @@ namespace SnakeGame.Forms
         public StartForm()
         {
             InitializeComponent();
+
+            SoundService.Init();
+            SoundService.PlayBackground();
+
             _taiKhoanRepo = new TaiKhoanRepository();
             passwordTxt.UseSystemPasswordChar = true;
         }
 
         private void FPBtn_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
+
             ForgotPasswordForm forgotPasswordForm = new ForgotPasswordForm();
             forgotPasswordForm.ShowDialog();
         }
 
         private void SignInBtn_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
+
             SignInForm signInForm = new SignInForm();
             signInForm.ShowDialog();
         }
 
         private void LoginBtn_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
+
             string username = UsernameTxt.Text.Trim();
             string password = passwordTxt.Text;
 
-            var validationResult = TaiKhoanValidator.ValidateLogin(username, password);
-            if (!validationResult.IsValid)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show(validationResult.ErrorMessage, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập username/email và mật khẩu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

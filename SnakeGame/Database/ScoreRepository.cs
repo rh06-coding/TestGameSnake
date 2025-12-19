@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using SnakeGame.Models;
@@ -7,7 +7,7 @@ namespace SnakeGame.Database
 {
     public class ScoreRepository
     {
-        // Thêm điểm mới
+        // Th�m ?i?m m?i
         public bool AddScore(int playerID, int scoreValue)
         {
             try
@@ -28,19 +28,13 @@ namespace SnakeGame.Database
                     }
                 }
             }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in AddScore: {ex.Message}");
-                throw new Exception($"Lỗi thêm điểm: Không thể kết nối database");
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in AddScore: {ex.Message}");
-                throw new Exception($"Lỗi thêm điểm: {ex.Message}");
+                throw new Exception($"L?i th�m ?i?m: {ex.Message}");
             }
         }
 
-        // Lấy tất cả điểm của một người chơi
+        // L?y t?t c? ?i?m c?a m?t ng??i ch?i
         public List<Score> GetScoresByPlayerID(int playerID)
         {
             List<Score> scores = new List<Score>();
@@ -76,19 +70,13 @@ namespace SnakeGame.Database
                 }
                 return scores;
             }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in GetScoresByPlayerID: {ex.Message}");
-                throw new Exception($"Lỗi lấy danh sách điểm: Không thể kết nối database");
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in GetScoresByPlayerID: {ex.Message}");
-                throw new Exception($"Lỗi lấy danh sách điểm: {ex.Message}");
+                throw new Exception($"L?i l?y danh s�ch ?i?m: {ex.Message}");
             }
         }
 
-        // Lấy top điểm cao nhất (Leaderboard)
+        // L?y top ?i?m cao nh?t (Leaderboard)
         public List<(string Username, int HighestScore, DateTime JoinDate)> GetTopScores(int topN = 10)
         {
             List<(string, int, DateTime)> topScores = new List<(string, int, DateTime)>();
@@ -121,19 +109,13 @@ namespace SnakeGame.Database
                 }
                 return topScores;
             }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in GetTopScores: {ex.Message}");
-                throw new Exception($"Lỗi lấy bảng xếp hạng: Không thể kết nối database");
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in GetTopScores: {ex.Message}");
-                throw new Exception($"Lỗi lấy bảng xếp hạng: {ex.Message}");
+                throw new Exception($"L?i l?y b?ng x?p h?ng: {ex.Message}");
             }
         }
 
-        // Lấy điểm trung bình của người chơi
+        // L?y ?i?m trung b�nh c?a ng??i ch?i
         public double GetAverageScore(int playerID)
         {
             try
@@ -154,19 +136,13 @@ namespace SnakeGame.Database
                     }
                 }
             }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in GetAverageScore: {ex.Message}");
-                throw new Exception($"Lỗi tính điểm trung bình: Không thể kết nối database");
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in GetAverageScore: {ex.Message}");
-                throw new Exception($"Lỗi tính điểm trung bình: {ex.Message}");
+                throw new Exception($"L?i t�nh ?i?m trung b�nh: {ex.Message}");
             }
         }
 
-        // Đếm số lần chơi
+        // ??m s? l?n ch?i
         public int GetTotalGamesPlayed(int playerID)
         {
             try
@@ -183,15 +159,9 @@ namespace SnakeGame.Database
                     }
                 }
             }
-            catch (SqlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in GetTotalGamesPlayed: {ex.Message}");
-                throw new Exception($"Lỗi đếm số ván chơi: Không thể kết nối database");
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in GetTotalGamesPlayed: {ex.Message}");
-                throw new Exception($"Lỗi đếm số ván chơi: {ex.Message}");
+                throw new Exception($"L?i ??m s? v�n ch?i: {ex.Message}");
             }
         }
     }

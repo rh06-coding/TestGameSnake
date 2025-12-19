@@ -123,29 +123,9 @@ namespace SnakeGame.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap GameBackground1_ic {
-            get {
-                object obj = ResourceManager.GetObject("GameBackground1_ic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap GameBackground2 {
             get {
                 object obj = ResourceManager.GetObject("GameBackground2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap GameBackground2_ic {
-            get {
-                object obj = ResourceManager.GetObject("GameBackground2_ic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
