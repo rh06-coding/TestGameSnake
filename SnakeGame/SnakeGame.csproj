@@ -191,6 +191,7 @@
     <Content Include="Resources\RedSnake\redhead.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\Sound\" />
     <Folder Include="Tests\" />
     <Folder Include="Utilities\" />
   </ItemGroup>
