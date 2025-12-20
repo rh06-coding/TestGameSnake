@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using SnakeGame.Database;
 using SnakeGame.Models;
 using SnakeGame.Validation;
+using SnakeGame.Sounds;
 
 namespace SnakeGame.Forms
 {
@@ -19,6 +20,9 @@ namespace SnakeGame.Forms
 
         public StartForm()
         {
+            SoundService.Init();
+            SoundService.PlayBackground();
+
             InitializeComponent();
             _taiKhoanRepo = new TaiKhoanRepository();
             passwordTxt.UseSystemPasswordChar = true;
@@ -26,18 +30,24 @@ namespace SnakeGame.Forms
 
         private void FPBtn_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
+
             ForgotPasswordForm forgotPasswordForm = new ForgotPasswordForm();
             forgotPasswordForm.ShowDialog();
         }
 
         private void SignInBtn_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
+
             SignInForm signInForm = new SignInForm();
             signInForm.ShowDialog();
         }
 
         private void LoginBtn_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
+
             string username = UsernameTxt.Text.Trim();
             string password = passwordTxt.Text;
 
