@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SnakeGame.Database;
+using SnakeGame.Sounds;
 
 namespace SnakeGame.Forms
 {
@@ -87,6 +88,7 @@ namespace SnakeGame.Forms
 
         private void btnExitToMenu_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
             this.Hide();
             MenuForm menuForm = new MenuForm();
             menuForm.ShowDialog();
