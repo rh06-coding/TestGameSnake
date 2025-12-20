@@ -118,6 +118,7 @@
       <DependentUpon>QuanLyNguoiChoiDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Service\GameEngine.cs" />
+    <Compile Include="Service\SoundService.cs" />
     <Compile Include="Validation\TaiKhoanValidator.cs" />
     <Compile Include="Validation\ValidationResult.cs" />
     <EmbeddedResource Include="Forms\ForgotPasswordForm.resx">
@@ -189,9 +190,13 @@
     <Content Include="Resources\GameBackground\GameBackground2.jpg" />
     <Content Include="Resources\RedSnake\redbody.png" />
     <Content Include="Resources\RedSnake\redhead.png" />
+    <Content Include="Resources\Sound\background.mp3" />
+    <Content Include="Resources\Sound\choose.wav" />
+    <Content Include="Resources\Sound\clickbutton.wav" />
+    <Content Include="Resources\Sound\eat.wav" />
+    <Content Include="Resources\Sound\lose.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Sound\" />
     <Folder Include="Tests\" />
     <Folder Include="Utilities\" />
   </ItemGroup>
