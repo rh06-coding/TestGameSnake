@@ -1,4 +1,7 @@
-﻿using System.Media;
+﻿using System;
+using System.IO;
+using System.Media;
+using System.Windows.Forms;
 using WMPLib;
 
 namespace SnakeGame.Sounds
@@ -10,48 +13,142 @@ namespace SnakeGame.Sounds
         private static SoundPlayer loseSound;
         private static SoundPlayer chooseSound;
         private static SoundPlayer clickButtonSound;
+        private static bool isInitialized = false;
 
         public static void Init()
         {
-            bgSound = new WindowsMediaPlayer();
-            bgSound.URL = "Resources/Sounds/background.mp3";
-            bgSound.settings.setMode("loop", true);
-            bgSound.settings.volume = 50;
+            try
+            {
+                // Lấy đường dẫn base directory của ứng dụng
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string soundDir = Path.Combine(baseDir, "Resources", "Sound");
 
-            eatSound = new SoundPlayer("Resources/Sounds/eat.wav");
-            loseSound = new SoundPlayer("Resources/Sounds/lose.wav");
-            chooseSound = new SoundPlayer("Resources/Sounds/choose.wav");
-            clickButtonSound = new SoundPlayer("Resources/Sounds/clickbutton.wav");
+                // Kiểm tra thư mục sound có tồn tại không
+                if (!Directory.Exists(soundDir))
+                {
+                    MessageBox.Show(
+                        $"Thư mục sound không tồn tại:\n{soundDir}\n\nỨng dụng sẽ chạy không có âm thanh.",
+                        "Cảnh báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Khởi tạo background music
+                string bgPath = Path.Combine(soundDir, "background.mp3");
+                if (File.Exists(bgPath))
+                {
+                    bgSound = new WindowsMediaPlayer();
+                    bgSound.URL = bgPath;
+                    bgSound.settings.setMode("loop", true);
+                    bgSound.settings.volume = 50;
+                }
+
+                // Khởi tạo các sound effects
+                string eatPath = Path.Combine(soundDir, "eat.wav");
+                if (File.Exists(eatPath))
+                    eatSound = new SoundPlayer(eatPath);
+
+                string losePath = Path.Combine(soundDir, "lose.wav");
+                if (File.Exists(losePath))
+                    loseSound = new SoundPlayer(losePath);
+
+                string choosePath = Path.Combine(soundDir, "choose.wav");
+                if (File.Exists(choosePath))
+                    chooseSound = new SoundPlayer(choosePath);
+
+                string clickPath = Path.Combine(soundDir, "clickbutton.wav");
+                if (File.Exists(clickPath))
+                    clickButtonSound = new SoundPlayer(clickPath);
+
+                isInitialized = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Lỗi khởi tạo âm thanh:\n{ex.Message}\n\nỨng dụng sẽ chạy không có âm thanh.",
+                    "Lỗi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         public static void PlayBackground()
         {
-            bgSound.controls.play();
+            try
+            {
+                if (isInitialized && bgSound != null)
+                    bgSound.controls.play();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error playing background: {ex.Message}");
+            }
         }
 
         public static void StopBackground()
         {
-            bgSound.controls.stop();
+            try
+            {
+                if (isInitialized && bgSound != null)
+                    bgSound.controls.stop();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error stopping background: {ex.Message}");
+            }
         }
 
         public static void PlayEat()
         {
-            eatSound.Play();
+            try
+            {
+                if (isInitialized && eatSound != null)
+                    eatSound.Play();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error playing eat sound: {ex.Message}");
+            }
         }
 
         public static void PlayLose()
         {
-            loseSound.Play();
+            try
+            {
+                if (isInitialized && loseSound != null)
+                    loseSound.Play();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error playing lose sound: {ex.Message}");
+            }
         }
 
         public static void PlayChoose()
         {
-            chooseSound.Play();
+            try
+            {
+                if (isInitialized && chooseSound != null)
+                    chooseSound.Play();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error playing choose sound: {ex.Message}");
+            }
         }
 
         public static void PlayClickButton()
         {
-            clickButtonSound.Play();
+            try
+            {
+                if (isInitialized && clickButtonSound != null)
+                    clickButtonSound.Play();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error playing click sound: {ex.Message}");
+            }
         }
     }
 }

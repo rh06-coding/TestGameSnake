@@ -61,13 +61,13 @@ namespace SnakeGame.Forms
 
         private void btnQuitGame_Click(object sender, EventArgs e)
         {
-            PlayClickButton()
+            SoundService.PlayClickButton();
             Application.Exit();
         }
 
         private void btnLeaderBoard_Click(object sender, EventArgs e)
         {
-            PlayClickButton()
+            SoundService.PlayClickButton();
             LeaderBoardForm LeaderBoardform = new LeaderBoardForm();
             this.Hide();
             LeaderBoardform.ShowDialog();

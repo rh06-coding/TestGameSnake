@@ -188,6 +188,7 @@
     <Content Include="Resources\DefaultSnake\Head.png" />
     <Content Include="Resources\GameBackground\GameBackground1.png" />
     <Content Include="Resources\GameBackground\GameBackground2.jpg" />
+    <Content Include="Resources\icon.ico" />
     <Content Include="Resources\RedSnake\redbody.png" />
     <Content Include="Resources\RedSnake\redhead.png" />
     <Content Include="Resources\Sound\background.mp3" />
