@@ -191,11 +191,21 @@
     <Content Include="Resources\icon.ico" />
     <Content Include="Resources\RedSnake\redbody.png" />
     <Content Include="Resources\RedSnake\redhead.png" />
-    <Content Include="Resources\Sound\background.mp3" />
-    <Content Include="Resources\Sound\choose.wav" />
-    <Content Include="Resources\Sound\clickbutton.wav" />
-    <Content Include="Resources\Sound\eat.wav" />
-    <Content Include="Resources\Sound\lose.wav" />
+    <Content Include="Resources\Sound\background.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\choose.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\clickbutton.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\eat.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\lose.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />
