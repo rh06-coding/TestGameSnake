@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SnakeGame.Sounds;
+using SnakeGame.Services;
 
 namespace SnakeGame.Models
 {
@@ -44,6 +44,7 @@ namespace SnakeGame.Models
             var start = new Position(Columns / 2, Rows / 2);
             Snake = new Snake(start, Direction.Huong.Right);
             Snake.ClearDirectionQueue();
+            SoundService.PlayInGame();
             
             // Khởi tạo chướng ngại vật
             Obstacle = new Obstacle();
@@ -98,7 +99,6 @@ namespace SnakeGame.Models
             if (nextHead.X < 0 || nextHead.X >= Columns || nextHead.Y < 0 || nextHead.Y >= Rows)
             {
                 IsGameOver = true;
-
                 return false;
             }
 
@@ -106,7 +106,6 @@ namespace SnakeGame.Models
             if (_obstaclePositions.Contains(nextHead))
             {
                 IsGameOver = true;
-                SoundService.PlayLose();
                 return false;
             }
 

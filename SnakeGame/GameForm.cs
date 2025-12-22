@@ -13,6 +13,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SnakeGame.Services;
 
 namespace SnakeGame
 {
@@ -50,6 +51,8 @@ namespace SnakeGame
             this.KeyPreview = true;
             this.DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+
+            SoundService.StopBackground();
         }
 
         
@@ -131,6 +134,8 @@ namespace SnakeGame
         // Xử lý sự kiện Game Over từ GameEngine
         private void GameEngine_GameOver(object sender, GameEngine.GameOverEventArgs e)
         {
+            SoundService.StopInGame();
+            SoundService.PlayLose();
             GameTimer.Stop();
 
             // ⭐ AUTO-SAVE SCORE TO DATABASE
@@ -228,6 +233,7 @@ namespace SnakeGame
                 }
                 else if(e.KeyCode == Keys.E)
                 {
+                    SoundService.PlayBackground();
                     this.Hide();    // ấn E để thoát về menu
                     MenuForm menuForm = new MenuForm();
                     menuForm.ShowDialog();
@@ -258,6 +264,7 @@ namespace SnakeGame
                 if(!_gameStarted)
                 {
                     _gameStarted = true;
+                    SoundService.PlayInGame();
                     GameCanvas.Invalidate();
                 }
                 GameTimer.Start();    // bắt đầu timer trong game engine
@@ -349,6 +356,7 @@ namespace SnakeGame
             if (_isPaused)
             {
                 GameTimer.Stop();
+                SoundService.StopInGame();
                 PauseMenuPanel.Visible = true;
                 PauseMenuPanel.BringToFront();
             }
@@ -363,6 +371,7 @@ namespace SnakeGame
             _isPaused = false;
             PauseMenuPanel.Visible = false;
             GameTimer.Start();
+            SoundService.PlayInGame();
             this.Focus();
         }
         private Image GetSnakeHead(Direction.Huong dir)
@@ -397,7 +406,6 @@ namespace SnakeGame
         private void GameForm_Load(object sender, EventArgs e)
         {
             InitializeGame();
-            
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
@@ -409,16 +417,21 @@ namespace SnakeGame
 
         private void PauseBtn_Click(object sender, EventArgs e)
         {
+            SoundService.StopInGame();
+            SoundService.PlayClickButton();
             TogglePause();
         }
 
         private void ResumeBtn_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
             ResumeGame();
         }
 
         private void QuitToMenuBtn_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
+            SoundService.PlayBackground();
             PauseMenuPanel.Visible = false;
             this.Hide();
             MenuForm menuForm = new MenuForm();

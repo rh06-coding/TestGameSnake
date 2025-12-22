@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SnakeGame.Sounds;
+using SnakeGame.Services;
 
 namespace SnakeGame.Forms
 {
@@ -15,6 +15,7 @@ namespace SnakeGame.Forms
     {
         int loaimap = 1;
         int mauran = 1;
+        bool first = true;
         public MenuForm()
         {
             InitializeComponent();
@@ -22,19 +23,24 @@ namespace SnakeGame.Forms
 
         private void DefaultSnakeRad_CheckedChanged(object sender, EventArgs e)
         {
-            SoundService.PlayChoose();
+            if (!first)
+            {
+                SoundService.PlayChoose();
+            }
             mauran = 1;
         }
 
         private void RedSnakeRad_CheckedChanged(object sender, EventArgs e)
         {
             SoundService.PlayChoose();
+            first = false;
             mauran = 2;
         }
 
         private void BlueSnakeRad_CheckedChanged(object sender, EventArgs e)
         {
             SoundService.PlayChoose();
+            first = false;
             mauran = 3;
         }
 
@@ -53,7 +59,6 @@ namespace SnakeGame.Forms
         private void button1_Click(object sender, EventArgs e)
         {
             SoundService.PlayClickButton();
-            SoundService.StopBackground();
             GameForm form = new GameForm(loaimap, mauran);
             this.Hide();
             form.ShowDialog();
@@ -61,13 +66,13 @@ namespace SnakeGame.Forms
 
         private void btnQuitGame_Click(object sender, EventArgs e)
         {
-            PlayClickButton()
+            SoundService.PlayClickButton();
             Application.Exit();
         }
 
         private void btnLeaderBoard_Click(object sender, EventArgs e)
         {
-            PlayClickButton()
+            SoundService.PlayClickButton();
             LeaderBoardForm LeaderBoardform = new LeaderBoardForm();
             this.Hide();
             LeaderBoardform.ShowDialog();

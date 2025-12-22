@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SnakeGame.Database;
-using SnakeGame.Sounds;
+using SnakeGame.Services;
 
 namespace SnakeGame.Forms
 {
