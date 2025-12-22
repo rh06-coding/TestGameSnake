@@ -51,7 +51,7 @@ namespace SnakeGame.Models
             
             Food = new Food();
 
-            GenerateObstacles(patternType: 0, obstacleCount: 8);
+            GenerateObstacles(patternType: 0, obstacleCount: 15);
 
             SpawnFood();
             
