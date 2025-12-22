@@ -3,6 +3,7 @@ using SnakeGame.Models;
 using SnakeGame.Services;
 using SnakeGame.Database;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -30,6 +31,7 @@ namespace SnakeGame
 
         // THÊM CÁC BIẾN HÌNH ẢNH
         private Image FoodImage;
+        private Image ObstacleImage;
         private Image SnakeBodyImage;
 
         // 4 hình ảnh cho 4 hướng của đầu rắn
@@ -89,6 +91,10 @@ namespace SnakeGame
 
             // Khởi tạo ảnh
             FoodImage = Properties.Resources.DefaultSnakeFood;
+
+            string resFolder = Path.Combine(Application.StartupPath, "Resources");
+            ObstacleImage = Image.FromFile(Path.Combine(resFolder, "rock.png"));
+
             VeBackground();
             VeRan();
             UpdateUI(_gameEngine.State);
@@ -322,8 +328,23 @@ namespace SnakeGame
                    
                 }
             }
+            //vẽ vật cản
+            var obstacles = state.Obstacle;
+            if (obstacles != null && obstacles.Positions != null)
+            {
+                foreach (var pos in obstacles.Positions)
+                {
+                    var rect = new Rectangle(
+                        pos.X * GridSize,
+                        pos.Y * GridSize,
+                        GridSize,
+                        GridSize
+                    );
+                    g.DrawImage(ObstacleImage, rect);
+                }
+            }
 
-            if(!_gameStarted && !state.IsGameOver)
+            if (!_gameStarted && !state.IsGameOver)
             {
                 string startMessage = "Press SPACE to start";
                 var font = new Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold);

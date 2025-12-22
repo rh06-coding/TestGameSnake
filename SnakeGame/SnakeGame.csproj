@@ -191,6 +191,7 @@
     <Content Include="Resources\GameBackground\GameBackground2.jpg" />
     <Content Include="Resources\RedSnake\redbody.png" />
     <Content Include="Resources\RedSnake\redhead.png" />
+	  <Content Include="Resources\rock.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />
