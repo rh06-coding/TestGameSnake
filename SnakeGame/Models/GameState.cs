@@ -20,6 +20,9 @@ namespace SnakeGame.Models
         public int Score { get; private set; }
         public bool IsGameOver { get; private set; }
 
+        public List<Particle> Particles { get; private set; }
+        private Random _rng = new Random();
+
         // Cache HashSet cho collision detection nhanh hơn
         private HashSet<Position> _bodyPositions;
         private HashSet<Position> _obstaclePositions;
@@ -50,8 +53,9 @@ namespace SnakeGame.Models
             Obstacle = new Obstacle();
             
             Food = new Food();
+            Particles = new List<Particle>();
 
-            GenerateObstacles(patternType: 0, obstacleCount: 15);
+            GenerateObstacles(patternType: 0, obstacleCount: 10);
 
             SpawnFood();
             
@@ -140,12 +144,21 @@ namespace SnakeGame.Models
             if (eatFood)
             {
                 SoundService.PlayEat();
+
+                SpawnFoodParticles(Food.Location);
                 Snake.Grow();
                 Score += 10;
                 SpawnFood();
             }
 
             UpdateBodyPositionsCache(); // Update cache sau khi grow
+
+            for (int i = Particles.Count - 1; i >= 0; i--)
+            {
+                Particles[i].Update();
+                if (Particles[i].IsDead)
+                    Particles.RemoveAt(i);
+            }
 
             return true;
         }
@@ -213,5 +226,14 @@ namespace SnakeGame.Models
             
             Food.PlaceAtRandom(Columns, Rows, occupied);
         }
+
+        private void SpawnFoodParticles(Position pos)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Particles.Add(new Particle(pos, _rng));
+            }
+        }
+
     }
 }

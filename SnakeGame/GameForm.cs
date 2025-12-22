@@ -344,6 +344,25 @@ namespace SnakeGame
                 }
             }
 
+            //Vẽ particle khi ăn food
+            var particles = state.Particles;
+            if (particles != null)
+            {
+                foreach (var p in particles)
+                {
+                    float px = (p.Position.X * GridSize) + GridSize / 2 + p.OffsetX * 3;
+                    float py = (p.Position.Y * GridSize) + GridSize / 2 + p.OffsetY * 3;
+
+                    g.FillEllipse(
+                        Brushes.Yellow,
+                        px,
+                        py,
+                        4,
+                        4
+                    );
+                }
+            }
+
             if (!_gameStarted && !state.IsGameOver)
             {
                 string startMessage = "Press SPACE to start";
