@@ -22,15 +22,15 @@ namespace SnakeGame.Services
             igSound.settings.setMode("loop", true);
             igSound.settings.volume = 40;
 
-            eatSound = new SoundPlayer("Resources/Sounds/eat.wav");
-            loseSound = new SoundPlayer("Resources/Sounds/lose.wav");
-            chooseSound = new SoundPlayer("Resources/Sounds/choose.wav");
-            clickButtonSound = new SoundPlayer("Resources/Sounds/clickbutton.wav");
+            eatSound = new SoundPlayer("Resources/Sound/eat.wav");
+            loseSound = new SoundPlayer("Resources/Sound/lose.wav");
+            chooseSound = new SoundPlayer("Resources/Sound/choose.wav");
+            clickButtonSound = new SoundPlayer("Resources/Sound/clickbutton.wav");
         }
 
         public static void PlayBackground()
         {
-            bgSound.URL = "Resources/Sounds/background.mp3";
+            bgSound.URL = "Resources/Sound/background.mp3";
             bgSound.controls.play();
         }
 
@@ -41,7 +41,7 @@ namespace SnakeGame.Services
 
         public static void PlayInGame()
         {
-            igSound.URL = "Resources/Sounds/ingame.mp3";
+            igSound.URL = "Resources/Sound/ingame.mp3";
             igSound.controls.play();
         }
 
