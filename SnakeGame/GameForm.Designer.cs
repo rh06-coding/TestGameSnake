@@ -38,8 +38,6 @@
             this.ScoreLabel = new System.Windows.Forms.Label();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.PauseBtn = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtSpeed = new System.Windows.Forms.TextBox();
             this.GameCanvas.SuspendLayout();
             this.PauseMenuPanel.SuspendLayout();
             this.SuspendLayout();
@@ -129,24 +127,6 @@
             this.PauseBtn.UseVisualStyleBackColor = true;
             this.PauseBtn.Click += new System.EventHandler(this.PauseBtn_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(740, 283);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(177, 76);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Speed\r\n(100-250):\r\n";
-            // 
-            // txtSpeed
-            // 
-            this.txtSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSpeed.Location = new System.Drawing.Point(783, 376);
-            this.txtSpeed.Name = "txtSpeed";
-            this.txtSpeed.Size = new System.Drawing.Size(126, 45);
-            this.txtSpeed.TabIndex = 4;
-            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -155,8 +135,6 @@
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(982, 653);
-            this.Controls.Add(this.txtSpeed);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.PauseBtn);
             this.Controls.Add(this.ScoreLabel);
             this.Controls.Add(this.GameCanvas);
@@ -189,8 +167,6 @@
         private System.Windows.Forms.Button QuitToMenuBtn;
         private System.Windows.Forms.Button ResumeBtn;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtSpeed;
     }
 }
 
