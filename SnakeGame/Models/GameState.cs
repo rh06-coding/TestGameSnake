@@ -15,7 +15,8 @@ namespace SnakeGame.Models
 
         public Snake Snake { get; private set; }
         public Food Food { get; private set; }
-        public Obstacle Obstacle { get; private set; }
+        public Obstacle ObstacleRock { get; private set; }
+        public Obstacle ObstacleSand { get; private set; }
 
         public int Score { get; private set; }
         public bool IsGameOver { get; private set; }
@@ -25,7 +26,8 @@ namespace SnakeGame.Models
 
         // Cache HashSet cho collision detection nhanh hơn
         private HashSet<Position> _bodyPositions;
-        private HashSet<Position> _obstaclePositions;
+        private HashSet<Position> _obstacleRockPositions;
+        private HashSet<Position> _obstacleSandPositions;
 
         public GameState(int columns, int rows)
         {
@@ -35,7 +37,8 @@ namespace SnakeGame.Models
             Columns = columns;
             Rows = rows;
             _bodyPositions = new HashSet<Position>();
-            _obstaclePositions = new HashSet<Position>();
+            _obstacleRockPositions = new HashSet<Position>();
+            _obstacleSandPositions = new HashSet<Position>();
 
             Reset();
         }
@@ -50,44 +53,18 @@ namespace SnakeGame.Models
             SoundService.PlayInGame();
             
             // Khởi tạo chướng ngại vật
-            Obstacle = new Obstacle();
+            ObstacleRock = new Obstacle();
+            ObstacleSand = new Obstacle();
             
             Food = new Food();
             Particles = new List<Particle>();
-
-            GenerateObstacles(patternType: 0, obstacleCount: 10);
 
             SpawnFood();
             
             // Update cache
             UpdateBodyPositionsCache();
             UpdateObstaclePositionsCache();
-        }
-
-        // Phương thức để tạo chướng ngại vật (có thể gọi từ GameForm)
-        public void GenerateObstacles(int patternType = 0, int obstacleCount = 5)
-        {
-            if (patternType == 0)
-            {
-                // Ngẫu nhiên
-                var occupied = new List<Position>(Snake.Body);
-                occupied.Add(Food.Location);
-                Obstacle.GenerateObstacles(Columns, Rows, occupied, obstacleCount);
-            }
-            else
-            {
-                // Theo mẫu
-                Obstacle.GeneratePatternObstacles(Columns, Rows, patternType);
-            }
-            
-            UpdateObstaclePositionsCache();
-            
-            // Đảm bảo food không spawn trên obstacle
-            if (Obstacle.IsAt(Food.Location))
-            {
-                SpawnFood();
-            }
-        }
+        }     
 
         public void ChangeDirection(Direction.Huong newDirection)
         {
@@ -110,7 +87,12 @@ namespace SnakeGame.Models
             }
 
             // Kiểm tra va chạm chướng ngại vật
-            if (_obstaclePositions.Contains(nextHead))
+            if (_obstacleRockPositions.Contains(nextHead))
+            {
+                IsGameOver = true;
+                return false;
+            }
+            if (_obstacleSandPositions.Contains(nextHead))
             {
                 IsGameOver = true;
                 return false;
@@ -118,7 +100,7 @@ namespace SnakeGame.Models
 
             // Kiểm tra va chạm thân - Kiểm tra với body hiện tại(chưa di chuyển)
             // Bỏ qua đuôi vì khi di chuyển đuôi sẽ bị xóa (trừ khi ăn)
-            for(int i = 0; i < Snake.Body.Count - 1; i++)
+            for (int i = 0; i < Snake.Body.Count - 1; i++)
             {
                 if (Snake.Body[i].Equals(nextHead))
                 {
@@ -202,15 +184,106 @@ namespace SnakeGame.Models
             }
         }
 
+        public void BuildMap(int mapType)
+        {
+            ObstacleRock.Clear();
+            ObstacleSand.Clear();
+
+            switch (mapType)
+            {
+                case 1:
+                    Map1();
+                    break;
+
+                case 2:
+                    Map2();
+                    break;
+
+                default:
+                    Map1();
+                    break;
+            }
+
+            UpdateObstaclePositionsCache();
+            if (ObstacleRock.IsAt(Food.Location))
+            {
+                SpawnFood();
+            }
+            if (ObstacleSand.IsAt(Food.Location))
+            {
+                SpawnFood();
+            }
+        }
+
+
+        private void BuildWallByRatio(double h1, double w1, double h2, double w2, Obstacle obstacle)
+        {
+            int r1 = (int)(h1 * Rows);
+            int c1 = (int)(w1 * Columns);
+            int r2 = (int)(h2 * Rows);
+            int c2 = (int)(w2 * Columns);
+
+            // ngang
+            if (r1 == r2)
+            {
+                int start = Math.Min(c1, c2);
+                int end = Math.Max(c1, c2);
+
+                for (int c = start; c <= end; c++)
+                    obstacle.AddObstacle(new Position(c, r1));
+            }
+            // dọc
+            else if (c1 == c2)
+            {
+                int start = Math.Min(r1, r2);
+                int end = Math.Max(r1, r2);
+
+                for (int r = start; r <= end; r++)
+                    obstacle.AddObstacle(new Position(c1, r));
+            }
+        }
+
+        private void Map1()
+        {
+            BuildWallByRatio(1.0 / 5, 0.5 / 5, 1.0 / 5, 2.5 / 5, ObstacleRock);
+            BuildWallByRatio(1.0 / 5, 0.5 / 5, 2.0 / 5, 0.5 / 5, ObstacleRock);
+
+            BuildWallByRatio(4.0 / 5, 2.5 / 5, 4.0 / 5, 4.5 / 5, ObstacleRock);
+            BuildWallByRatio(3.0 / 5, 4.5 / 5, 4.0 / 5, 4.5 / 5, ObstacleRock);
+        }
+
+        private void Map2()
+        {
+            BuildWallByRatio(0.5 / 5, 1.0 / 5, 2.5 / 5, 1.0 / 5, ObstacleRock);
+            BuildWallByRatio(1.0 / 5, 0.5 / 5, 1.0 / 5, 2.5 / 5, ObstacleRock);
+
+            BuildWallByRatio(3.0 / 5, 4.0 / 5, 4.0 / 5, 4.0 / 5, ObstacleRock);
+            BuildWallByRatio(4.0 / 5, 3.0 / 5, 4.0 / 5, 4.0 / 5, ObstacleRock);
+
+            BuildWallByRatio(0.5 / 5, 3.5 / 5, 0.5 / 5, 4.5 / 5, ObstacleSand);
+            BuildWallByRatio(0.5 / 5, 4.5 / 5, 1.0 / 5, 4.5 / 5, ObstacleSand);
+
+            BuildWallByRatio(3.5 / 5, 0.5 / 5, 4.5 / 5, 0.5 / 5, ObstacleSand);
+            BuildWallByRatio(4.5 / 5, 0.5 / 5, 4.5 / 5, 1.0 / 5, ObstacleSand);
+        }
+
         // Update cache cho chướng ngại vật
         private void UpdateObstaclePositionsCache()
         {
-            _obstaclePositions.Clear();
-            if (Obstacle != null && Obstacle.Positions != null)
+            _obstacleRockPositions.Clear();
+            _obstacleSandPositions.Clear();
+            if (ObstacleRock != null && ObstacleRock.Positions != null)
             {
-                foreach (var pos in Obstacle.Positions)
+                foreach (var pos in ObstacleRock.Positions)
                 {
-                    _obstaclePositions.Add(pos);
+                    _obstacleRockPositions.Add(pos);
+                }
+            }
+            if (ObstacleSand != null && ObstacleSand.Positions != null)
+            {
+                foreach (var pos in ObstacleSand.Positions)
+                {
+                    _obstacleSandPositions.Add(pos);
                 }
             }
         }
@@ -219,11 +292,15 @@ namespace SnakeGame.Models
         {
             // Tạo danh sách các vị trí đã bị chiếm
             var occupied = new List<Position>(Snake.Body);
-            if (Obstacle != null && Obstacle.Positions != null)
+            if (ObstacleRock != null && ObstacleRock.Positions != null)
             {
-                occupied.AddRange(Obstacle.Positions);
+                occupied.AddRange(ObstacleRock.Positions);
             }
-            
+            if (ObstacleSand != null && ObstacleSand.Positions != null)
+            {
+                occupied.AddRange(ObstacleSand.Positions);
+            }
+
             Food.PlaceAtRandom(Columns, Rows, occupied);
         }
 

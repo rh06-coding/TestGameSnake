@@ -31,7 +31,8 @@ namespace SnakeGame
 
         // THÊM CÁC BIẾN HÌNH ẢNH
         private Image FoodImage;
-        private Image ObstacleImage;
+        private Image ObstacleRockImage;
+        private Image ObstacleSandImage;
         private Image SnakeBodyImage;
 
         // 4 hình ảnh cho 4 hướng của đầu rắn
@@ -76,6 +77,7 @@ namespace SnakeGame
                     break;
             }
         }
+
         private void InitializeGame()
         {
             // Tính toán kích thước lưới dựa trên Panel
@@ -87,13 +89,21 @@ namespace SnakeGame
             _gameEngine.StateChanged += GameEngine_StateChanged;
             _gameEngine.GameOver += GameEngine_GameOver;
 
+            if (LoaiMap == 1)
+                _gameEngine.State.BuildMap(1);
+            else
+                _gameEngine.State.BuildMap(2);
+
             _gameStarted = false;
 
             // Khởi tạo ảnh
             FoodImage = Properties.Resources.DefaultSnakeFood;
 
-            string resFolder = Path.Combine(Application.StartupPath, "Resources");
-            ObstacleImage = Image.FromFile(Path.Combine(resFolder, "rock.png"));
+            string resFolder1 = Path.Combine(Application.StartupPath, "Resources");
+            ObstacleRockImage = Image.FromFile(Path.Combine(resFolder1, "rock.png"));
+
+            string resFolder2 = Path.Combine(Application.StartupPath, "Resources");
+            ObstacleSandImage = Image.FromFile(Path.Combine(resFolder2, "sand.png"));
 
             VeBackground();
             VeRan();
@@ -235,6 +245,14 @@ namespace SnakeGame
                 if (e.KeyCode == Keys.R)
                 {
                     _gameEngine.reset(); // ấn R để chơi lại
+                    _gameEngine.State.ObstacleRock.Clear();
+                    _gameEngine.State.ObstacleSand.Clear();
+
+                    if (LoaiMap == 1)
+                        _gameEngine.State.BuildMap(1);
+                    else
+                        _gameEngine.State.BuildMap(2);
+
                     txtSpeed.Enabled = true;
                 }
                 else if(e.KeyCode == Keys.E)
@@ -328,11 +346,12 @@ namespace SnakeGame
                    
                 }
             }
-            //vẽ vật cản
-            var obstacles = state.Obstacle;
-            if (obstacles != null && obstacles.Positions != null)
+
+            var obstaclesRock = state.ObstacleRock;
+            var obstaclesSand = state.ObstacleSand;
+            if (obstaclesRock != null && obstaclesRock.Positions != null)
             {
-                foreach (var pos in obstacles.Positions)
+                foreach (var pos in obstaclesRock.Positions)
                 {
                     var rect = new Rectangle(
                         pos.X * GridSize,
@@ -340,7 +359,20 @@ namespace SnakeGame
                         GridSize,
                         GridSize
                     );
-                    g.DrawImage(ObstacleImage, rect);
+                    g.DrawImage(ObstacleRockImage, rect);
+                }
+            }
+            if (obstaclesSand != null && obstaclesSand.Positions != null)
+            {
+                foreach (var pos in obstaclesSand.Positions)
+                {
+                    var rect = new Rectangle(
+                        pos.X * GridSize,
+                        pos.Y * GridSize,
+                        GridSize,
+                        GridSize
+                    );
+                    g.DrawImage(ObstacleSandImage, rect);
                 }
             }
 
