@@ -224,7 +224,7 @@ namespace SnakeGame
                 if (e.KeyCode == Keys.R)
                 {
                     _gameEngine.reset(); // ấn R để chơi lại
-                    txtSpeed.Enabled = true;
+                    _gameStarted = false;
                 }
                 else if(e.KeyCode == Keys.E)
                 {
@@ -237,24 +237,6 @@ namespace SnakeGame
 
             if (e.KeyCode == Keys.Space)    //Bắt đầu game khi ấn Space
             {
-                if(txtSpeed.Text != "")
-                {
-                    int speed;
-                    if(int.TryParse(txtSpeed.Text, out speed))
-                    {
-                        if(speed < 100 || speed > 250)
-                        {
-                            MessageBox.Show("Please enter a speed between 100 and 250 milliseconds.",
-                                "Invalid Speed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                        else
-                        {
-                            GameTimer.Interval = speed;
-                            txtSpeed.Enabled = false;
-                        }
-                    }
-                }
                 if(!_gameStarted)
                 {
                     _gameStarted = true;

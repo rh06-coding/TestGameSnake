@@ -18,6 +18,8 @@ namespace SnakeGame.Forms
         public MenuForm()
         {
             InitializeComponent();
+            DefaultSnakeRad.Checked = true;
+            Background1Rad.Checked = true;
         }
 
         private void DefaultSnakeRad_CheckedChanged(object sender, EventArgs e)
