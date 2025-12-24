@@ -192,6 +192,8 @@
     <Content Include="Resources\icon.ico" />
     <Content Include="Resources\RedSnake\redbody.png" />
     <Content Include="Resources\RedSnake\redhead.png" />
+    <Content Include="Resources\rock.png" />
+    <Content Include="Resources\sand.png" />
     <Content Include="Resources\Sound\background.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
