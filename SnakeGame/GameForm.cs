@@ -3,6 +3,7 @@ using SnakeGame.Models;
 using SnakeGame.Services;
 using SnakeGame.Database;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SnakeGame.Services;
 
 namespace SnakeGame
 {
@@ -29,6 +31,8 @@ namespace SnakeGame
 
         // THÊM CÁC BIẾN HÌNH ẢNH
         private Image FoodImage;
+        private Image ObstacleRockImage;
+        private Image ObstacleSandImage;
         private Image SnakeBodyImage;
 
         // 4 hình ảnh cho 4 hướng của đầu rắn
@@ -50,6 +54,8 @@ namespace SnakeGame
             this.KeyPreview = true;
             this.DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+
+            SoundService.StopBackground();
         }
 
         
@@ -82,10 +88,22 @@ namespace SnakeGame
             _gameEngine.StateChanged += GameEngine_StateChanged;
             _gameEngine.GameOver += GameEngine_GameOver;
 
+            //Build map
+            if (LoaiMap == 1)
+                _gameEngine.State.BuildMap(1);
+            else
+                _gameEngine.State.BuildMap(2);
+
             _gameStarted = false;
 
             // Khởi tạo ảnh
             FoodImage = Properties.Resources.DefaultSnakeFood;
+            string resFolder1 = Path.Combine(Application.StartupPath, "Resources");
+            ObstacleRockImage = Image.FromFile(Path.Combine(resFolder1, "rock.png"));
+
+            string resFolder2 = Path.Combine(Application.StartupPath, "Resources");
+            ObstacleSandImage = Image.FromFile(Path.Combine(resFolder2, "sand.png"));
+
             VeBackground();
             VeRan();
             UpdateUI(_gameEngine.State);
@@ -131,6 +149,9 @@ namespace SnakeGame
         // Xử lý sự kiện Game Over từ GameEngine
         private void GameEngine_GameOver(object sender, GameEngine.GameOverEventArgs e)
         {
+            SoundService.StopInGame();
+            SoundService.PlayLose();
+
             GameTimer.Stop();
 
             // ⭐ AUTO-SAVE SCORE TO DATABASE
@@ -224,10 +245,20 @@ namespace SnakeGame
                 if (e.KeyCode == Keys.R)
                 {
                     _gameEngine.reset(); // ấn R để chơi lại
+                    _gameEngine.State.ObstacleRock.Clear();
+                    _gameEngine.State.ObstacleSand.Clear();
+
+                    if (LoaiMap == 1)
+                        _gameEngine.State.BuildMap(1);
+                    else
+                        _gameEngine.State.BuildMap(2);
+
                     _gameStarted = false;
                 }
                 else if(e.KeyCode == Keys.E)
                 {
+                    SoundService.PlayBackground();
+
                     this.Hide();    // ấn E để thoát về menu
                     MenuForm menuForm = new MenuForm();
                     menuForm.ShowDialog();
@@ -240,6 +271,9 @@ namespace SnakeGame
                 if(!_gameStarted)
                 {
                     _gameStarted = true;
+
+                    SoundService.PlayInGame();
+
                     GameCanvas.Invalidate();
                 }
                 GameTimer.Start();    // bắt đầu timer trong game engine
@@ -298,7 +332,56 @@ namespace SnakeGame
                 }
             }
 
-            if(!_gameStarted && !state.IsGameOver)
+            //Vẽ vật cản
+            var obstaclesRock = state.ObstacleRock;
+            var obstaclesSand = state.ObstacleSand;
+            if (obstaclesRock != null && obstaclesRock.Positions != null)
+            {
+                foreach (var pos in obstaclesRock.Positions)
+                {
+                    var rect = new Rectangle(
+                        pos.X * GridSize,
+                        pos.Y * GridSize,
+                        GridSize,
+                        GridSize
+                    );
+                    g.DrawImage(ObstacleRockImage, rect);
+                }
+            }
+            if (obstaclesSand != null && obstaclesSand.Positions != null)
+            {
+                foreach (var pos in obstaclesSand.Positions)
+                {
+                    var rect = new Rectangle(
+                        pos.X * GridSize,
+                        pos.Y * GridSize,
+                        GridSize,
+                        GridSize
+                    );
+                    g.DrawImage(ObstacleSandImage, rect);
+                }
+            }
+
+            //Vẽ partical khi ăn
+            var particles = state.Particles;
+            if (particles != null)
+            {
+                foreach (var p in particles)
+                {
+                    float px = (p.Position.X * GridSize) + GridSize / 2 + p.OffsetX * 3;
+                    float py = (p.Position.Y * GridSize) + GridSize / 2 + p.OffsetY * 3;
+
+                    g.FillEllipse(
+                        Brushes.Yellow,
+                        px,
+                        py,
+                        4,
+                        4
+                    );
+                }
+            }
+
+            if (!_gameStarted && !state.IsGameOver)
             {
                 string startMessage = "Press SPACE to start";
                 var font = new Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold);
@@ -331,6 +414,9 @@ namespace SnakeGame
             if (_isPaused)
             {
                 GameTimer.Stop();
+
+                SoundService.StopInGame();
+
                 PauseMenuPanel.Visible = true;
                 PauseMenuPanel.BringToFront();
             }
@@ -345,6 +431,9 @@ namespace SnakeGame
             _isPaused = false;
             PauseMenuPanel.Visible = false;
             GameTimer.Start();
+
+            SoundService.PlayInGame();
+
             this.Focus();
         }
         private Image GetSnakeHead(Direction.Huong dir)
@@ -391,16 +480,24 @@ namespace SnakeGame
 
         private void PauseBtn_Click(object sender, EventArgs e)
         {
+            SoundService.StopInGame();
+            SoundService.PlayClickButton();
+
             TogglePause();
         }
 
         private void ResumeBtn_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
+
             ResumeGame();
         }
 
         private void QuitToMenuBtn_Click(object sender, EventArgs e)
         {
+            SoundService.PlayClickButton();
+            SoundService.PlayBackground();
+
             PauseMenuPanel.Visible = false;
             this.Hide();
             MenuForm menuForm = new MenuForm();

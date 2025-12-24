@@ -106,6 +106,7 @@
     <Compile Include="Models\Food.cs" />
     <Compile Include="Models\GameState.cs" />
     <Compile Include="Models\Obstacle.cs" />
+    <Compile Include="Models\Partical.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\Snake.cs" />
