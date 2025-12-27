@@ -44,6 +44,7 @@ namespace SnakeGame
 
         private bool _isPaused = false; // Biến để theo dõi trạng thái tạm dừng
         private bool _gameStarted = false; //Biến để kiếm tra game đã bắt đầu chưa
+        private int _previousScore = 0;
         public GameForm(int mapduocchon, int randuocchon)
         {
             this.LoaiMap = mapduocchon;
@@ -184,6 +185,14 @@ namespace SnakeGame
         private void UpdateUI(GameState state)
         {
             if (state == null) return;
+
+            if(state.Score > _previousScore)
+            {
+                if (GameTimer.Interval > 120)
+                {
+                    GameTimer.Interval -= 1; // Giảm interval để tăng tốc độ
+                }
+            }
 
             // Cập nhật điểm số
             ScoreLabel.Text = $"Score: {state.Score}";

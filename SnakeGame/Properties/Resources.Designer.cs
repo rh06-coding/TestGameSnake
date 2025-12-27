@@ -183,6 +183,16 @@ namespace SnakeGame.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap sidebar_bg {
+            get {
+                object obj = ResourceManager.GetObject("sidebar_bg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SnakeGameStartScreen {
             get {
                 object obj = ResourceManager.GetObject("SnakeGameStartScreen", resourceCulture);
