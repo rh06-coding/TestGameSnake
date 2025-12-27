@@ -155,14 +155,14 @@ namespace SnakeGame
 
             GameTimer.Stop();
 
-            // ⭐ AUTO-SAVE SCORE TO DATABASE
+            // ⭐ AUTO-SAVE SCORE TO DATABASE với mapType
             if (SessionManager.IsLoggedIn && e.Score > 0)
             {
-                bool saved = SessionManager.SaveGameScore(e.Score);
+                bool saved = SessionManager.SaveGameScore(e.Score, LoaiMap); //LoaiMap
                 
                 if (saved)
                 {
-                    Debug.WriteLine($"✅ Score {e.Score} đã được lưu vào database!");
+                    Debug.WriteLine($"✅ Score {e.Score} (Map {LoaiMap}) đã được lưu vào database!");
                 }
                 else
                 {

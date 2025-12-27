@@ -1,4 +1,4 @@
-using SnakeGame.Models;
+﻿using SnakeGame.Models;
 using System;
 
 namespace SnakeGame.Database
@@ -23,21 +23,22 @@ namespace SnakeGame.Database
         }
 
         /// <summary>
-        /// L?u ?i?m s? khi game over v� c?p nh?t HighestScore n?u c?n
+        /// Lưu điểm số khi game over và cập nhật HighestScore nếu cần
         /// </summary>
-        /// <param name="score">?i?m s? ??t ???c</param>
-        /// <returns>True n?u l?u th�nh c�ng</returns>
-        public static bool SaveGameScore(int score)
+        /// <param name="score">Điểm số đạt được</param>
+        /// <param name="mapType">Loại map (1 hoặc 2)</param>
+        /// <returns>True nếu lưu thành công</returns>
+        public static bool SaveGameScore(int score, int mapType)
         {
             if (!IsLoggedIn)
             {
-                System.Diagnostics.Debug.WriteLine("?? User not logged in, cannot save score");
+                System.Diagnostics.Debug.WriteLine("❌ User not logged in, cannot save score");
                 return false;
             }
 
             if (score <= 0)
             {
-                System.Diagnostics.Debug.WriteLine("?? Invalid score value, cannot save");
+                System.Diagnostics.Debug.WriteLine("❌ Invalid score value, cannot save");
                 return false;
             }
 
@@ -46,18 +47,18 @@ namespace SnakeGame.Database
                 var scoreRepo = new ScoreRepository();
                 var taiKhoanRepo = new TaiKhoanRepository();
 
-                // 1. L?u ?i?m v�o b?ng SCORES
-                bool saved = scoreRepo.AddScore(CurrentUser.PlayerID, score);
+                // 1. Lưu điểm vào bảng SCORES với mapType
+                bool saved = scoreRepo.AddScore(CurrentUser.PlayerID, score, mapType);
 
                 if (!saved)
                 {
-                    System.Diagnostics.Debug.WriteLine($"? Failed to save score {score} to database");
+                    System.Diagnostics.Debug.WriteLine($"❌ Failed to save score {score} (Map {mapType}) to database");
                     return false;
                 }
 
-                System.Diagnostics.Debug.WriteLine($"? Score {score} saved to SCORES table");
+                System.Diagnostics.Debug.WriteLine($"✅ Score {score} (Map {mapType}) saved to SCORES table");
 
-                // 2. C?p nh?t HighestScore n?u ?i?m m?i cao h?n
+                // 2. Cập nhật HighestScore nếu điểm mới cao hơn
                 if (score > CurrentUser.HighestScore)
                 {
                     bool updated = taiKhoanRepo.UpdateHighestScore(CurrentUser.PlayerID, score);
@@ -65,11 +66,11 @@ namespace SnakeGame.Database
                     if (updated)
                     {
                         CurrentUser.HighestScore = score; // Update local cache
-                        System.Diagnostics.Debug.WriteLine($"? New highest score updated: {score}");
+                        System.Diagnostics.Debug.WriteLine($"✅ New highest score updated: {score}");
                     }
                     else
                     {
-                        System.Diagnostics.Debug.WriteLine($"?? Failed to update highest score");
+                        System.Diagnostics.Debug.WriteLine($"⚠️ Failed to update highest score");
                     }
                 }
 
@@ -77,20 +78,20 @@ namespace SnakeGame.Database
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"? SaveGameScore Error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"❌ SaveGameScore Error: {ex.Message}");
                 return false;
             }
         }
 
         /// <summary>
-        /// L?y th?ng k� c?a ng??i ch?i hi?n t?i
+        /// Lấy thống kê của người chơi hiện tại
         /// </summary>
-        /// <returns>PlayerStats object ho?c null n?u kh�ng ??ng nh?p</returns>
+        /// <returns>PlayerStats object hoặc null nếu không đăng nhập</returns>
         public static PlayerStats GetPlayerStats()
         {
             if (!IsLoggedIn)
             {
-                System.Diagnostics.Debug.WriteLine("?? User not logged in, cannot get stats");
+                System.Diagnostics.Debug.WriteLine("⚠️ User not logged in, cannot get stats");
                 return null;
             }
 
@@ -107,19 +108,19 @@ namespace SnakeGame.Database
                     HighestScore = CurrentUser.HighestScore
                 };
 
-                System.Diagnostics.Debug.WriteLine($"? Stats loaded: {stats.TotalGames} games, Avg: {stats.AverageScore:F1}, Best: {stats.HighestScore}");
+                System.Diagnostics.Debug.WriteLine($"✅ Stats loaded: {stats.TotalGames} games, Avg: {stats.AverageScore:F1}, Best: {stats.HighestScore}");
                 return stats;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"? GetPlayerStats Error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"❌ GetPlayerStats Error: {ex.Message}");
                 return null;
             }
         }
     }
 
     /// <summary>
-    /// Model ch?a th?ng k� c?a ng??i ch?i
+    /// Model chứa thống kê của người chơi
     /// </summary>
     public class PlayerStats
     {
@@ -130,7 +131,7 @@ namespace SnakeGame.Database
         public int HighestScore { get; set; }
 
         /// <summary>
-        /// Format hi?n th? th?ng k�
+        /// Format hiển thị thống kê
         /// </summary>
         public override string ToString()
         {

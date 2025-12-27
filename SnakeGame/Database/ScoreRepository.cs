@@ -8,20 +8,21 @@ namespace SnakeGame.Database
     public class ScoreRepository
     {
         // Thêm điểm mới
-        public bool AddScore(int playerID, int scoreValue)
+        public bool AddScore(int playerID, int scoreValue, int mapType)
         {
             try
             {
                 using (SqlConnection conn = DatabaseHelper.GetConnection())
                 {
                     conn.Open();
-                    string query = @"INSERT INTO SCORES (player_ID, score) 
-                                   VALUES (@playerID, @score)";
+                    string query = @"INSERT INTO SCORES (player_ID, score, mapType) 
+                                   VALUES (@playerID, @score, @mapType)";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@playerID", playerID);
                         cmd.Parameters.AddWithValue("@score", scoreValue);
+                        cmd.Parameters.AddWithValue("@mapType", mapType);
 
                         int result = cmd.ExecuteNonQuery();
                         return result > 0;
@@ -130,6 +131,58 @@ namespace SnakeGame.Database
             {
                 System.Diagnostics.Debug.WriteLine($"Error in GetTopScores: {ex.Message}");
                 throw new Exception($"Lỗi lấy bảng xếp hạng: {ex.Message}");
+            }
+        }
+
+        // Lấy top điểm cao nhất theo map (Leaderboard theo map)
+        public List<(string Username, int HighestScore, DateTime JoinDate)> GetTopScoresByMap(int mapType, int topN = 10)
+        {
+            List<(string, int, DateTime)> topScores = new List<(string, int, DateTime)>();
+
+            try
+            {
+                using (SqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+                    string query = @"SELECT TOP (@topN) 
+                                        t.username, 
+                                        MAX(s.score) AS HighestScore, 
+                                        t.JoinDate
+                                    FROM TAIKHOAN t
+                                    INNER JOIN SCORES s ON t.player_ID = s.player_ID
+                                    WHERE s.mapType = @mapType
+                                    GROUP BY t.username, t.JoinDate
+                                    ORDER BY MAX(s.score) DESC, t.JoinDate ASC";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@topN", topN);
+                        cmd.Parameters.AddWithValue("@mapType", mapType);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                topScores.Add((
+                                    reader.GetString(0),
+                                    reader.GetInt32(1),
+                                    reader.GetDateTime(2)
+                                ));
+                            }
+                        }
+                    }
+                }
+                return topScores;
+            }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SQL Error in GetTopScoresByMap: {ex.Message}");
+                throw new Exception($"Lỗi lấy bảng xếp hạng theo map: Không thể kết nối database");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in GetTopScoresByMap: {ex.Message}");
+                throw new Exception($"Lỗi lấy bảng xếp hạng theo map: {ex.Message}");
             }
         }
 

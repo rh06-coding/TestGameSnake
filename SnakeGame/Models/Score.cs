@@ -8,10 +8,12 @@ namespace SnakeGame.Models
         public int PlayerID { get; set; }
         public int ScoreValue { get; set; }
         public DateTime AchievedAt { get; set; }
+        public int MapType { get; set; }
 
         public Score()
         {
             AchievedAt = DateTime.Now;
+            MapType = 1;
         }
     }
 }

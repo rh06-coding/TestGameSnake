@@ -253,3 +253,20 @@ PRINT '  player1  / 123456';
 PRINT '  player2  / 123456';
 PRINT '  player3  / 123456';
 GO
+
+-- ===============================
+-- Cập nhật cấu trúc bảng SCORES
+-- ===============================
+-- Thêm cột mapType vào bảng SCORES
+ALTER TABLE SCORES
+ADD mapType INT NOT NULL DEFAULT 1;
+GO
+
+-- Thêm constraint để đảm bảo mapType hợp lệ (1 hoặc 2)
+ALTER TABLE SCORES
+ADD CONSTRAINT CK_MapType CHECK (mapType IN (1, 2));
+GO
+
+-- Tạo index để tăng tốc query theo map
+CREATE INDEX IX_SCORES_MapType ON SCORES(mapType, score DESC);
+GO
