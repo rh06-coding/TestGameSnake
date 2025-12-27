@@ -91,5 +91,10 @@ namespace SnakeGame.Forms
             this.Hide();
             LeaderBoardform.ShowDialog();
         }
+
+        private void MenuForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Close();
+        }
     }
 }

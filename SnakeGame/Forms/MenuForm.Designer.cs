@@ -208,6 +208,7 @@
             this.ForeColor = System.Drawing.Color.Black;
             this.Name = "MenuForm";
             this.Text = "MenuForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MenuForm_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
