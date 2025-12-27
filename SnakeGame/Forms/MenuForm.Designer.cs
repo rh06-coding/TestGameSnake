@@ -30,14 +30,16 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.Background2Rad = new System.Windows.Forms.RadioButton();
-            this.Background1Rad = new System.Windows.Forms.RadioButton();
             this.btnStart = new System.Windows.Forms.Button();
             this.btnLeaderBoard = new System.Windows.Forms.Button();
             this.btnQuitGame = new System.Windows.Forms.Button();
+            this.Background2Rad = new System.Windows.Forms.RadioButton();
+            this.Background1Rad = new System.Windows.Forms.RadioButton();
             this.BlueSnakeRad = new System.Windows.Forms.RadioButton();
             this.RedSnakeRad = new System.Windows.Forms.RadioButton();
             this.DefaultSnakeRad = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -58,6 +60,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.Background2Rad);
             this.groupBox2.Controls.Add(this.Background1Rad);
             this.groupBox2.Font = new System.Drawing.Font("Pristina", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -68,33 +72,6 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Choose Your Background";
-            // 
-            // Background2Rad
-            // 
-            this.Background2Rad.AutoSize = true;
-            this.Background2Rad.BackgroundImage = global::SnakeGame.Properties.Resources.GameBackground2_ic;
-            this.Background2Rad.Image = global::SnakeGame.Properties.Resources.GameBackground2_ic;
-            this.Background2Rad.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.Background2Rad.Location = new System.Drawing.Point(534, 51);
-            this.Background2Rad.Name = "Background2Rad";
-            this.Background2Rad.Size = new System.Drawing.Size(145, 85);
-            this.Background2Rad.TabIndex = 1;
-            this.Background2Rad.TabStop = true;
-            this.Background2Rad.UseVisualStyleBackColor = true;
-            this.Background2Rad.CheckedChanged += new System.EventHandler(this.Background2Rad_CheckedChanged);
-            // 
-            // Background1Rad
-            // 
-            this.Background1Rad.AutoSize = true;
-            this.Background1Rad.Image = global::SnakeGame.Properties.Resources.GameBackground1_ic;
-            this.Background1Rad.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.Background1Rad.Location = new System.Drawing.Point(82, 56);
-            this.Background1Rad.Name = "Background1Rad";
-            this.Background1Rad.Size = new System.Drawing.Size(145, 80);
-            this.Background1Rad.TabIndex = 0;
-            this.Background1Rad.TabStop = true;
-            this.Background1Rad.UseVisualStyleBackColor = true;
-            this.Background1Rad.CheckedChanged += new System.EventHandler(this.Background1Rad_CheckedChanged);
             // 
             // btnStart
             // 
@@ -135,6 +112,34 @@
             this.btnQuitGame.UseVisualStyleBackColor = false;
             this.btnQuitGame.Click += new System.EventHandler(this.btnQuitGame_Click);
             // 
+            // Background2Rad
+            // 
+            this.Background2Rad.AutoSize = true;
+            this.Background2Rad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.Background2Rad.Image = global::SnakeGame.Properties.Resources.GameBackground2_ic;
+            this.Background2Rad.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.Background2Rad.Location = new System.Drawing.Point(534, 51);
+            this.Background2Rad.Name = "Background2Rad";
+            this.Background2Rad.Size = new System.Drawing.Size(145, 85);
+            this.Background2Rad.TabIndex = 1;
+            this.Background2Rad.TabStop = true;
+            this.Background2Rad.UseVisualStyleBackColor = true;
+            this.Background2Rad.CheckedChanged += new System.EventHandler(this.Background2Rad_CheckedChanged);
+            // 
+            // Background1Rad
+            // 
+            this.Background1Rad.AutoSize = true;
+            this.Background1Rad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.Background1Rad.Image = global::SnakeGame.Properties.Resources.GameBackground1_ic;
+            this.Background1Rad.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.Background1Rad.Location = new System.Drawing.Point(82, 56);
+            this.Background1Rad.Name = "Background1Rad";
+            this.Background1Rad.Size = new System.Drawing.Size(145, 80);
+            this.Background1Rad.TabIndex = 0;
+            this.Background1Rad.TabStop = true;
+            this.Background1Rad.UseVisualStyleBackColor = true;
+            this.Background1Rad.CheckedChanged += new System.EventHandler(this.Background1Rad_CheckedChanged);
+            // 
             // BlueSnakeRad
             // 
             this.BlueSnakeRad.AutoSize = true;
@@ -171,6 +176,24 @@
             this.DefaultSnakeRad.UseVisualStyleBackColor = true;
             this.DefaultSnakeRad.CheckedChanged += new System.EventHandler(this.DefaultSnakeRad_CheckedChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(98, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(76, 22);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Map Vừa";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(552, 29);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(69, 22);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Map khó";
+            // 
             // MenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -205,5 +228,7 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnLeaderBoard;
         private System.Windows.Forms.Button btnQuitGame;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
