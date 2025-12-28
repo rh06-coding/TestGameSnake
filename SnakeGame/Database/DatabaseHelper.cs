@@ -227,12 +227,15 @@ namespace SnakeGame.Database
                                 score_ID INT PRIMARY KEY IDENTITY(1,1),
                                 player_ID INT NOT NULL,
                                 score INT NOT NULL,
+                                mapType INT NOT NULL DEFAULT 1,
                                 AchievedAt DATETIME DEFAULT GETDATE(),
                                 CONSTRAINT FK_SCORES_TAIKHOAN FOREIGN KEY (player_ID) 
-                                    REFERENCES TAIKHOAN(player_ID) ON DELETE CASCADE
+                                    REFERENCES TAIKHOAN(player_ID) ON DELETE CASCADE,
+                                CONSTRAINT CK_Score CHECK (score >= 0),
+                                CONSTRAINT CK_MapType CHECK (mapType IN (1, 2))
                             );
                             
-                            PRINT 'Bảng SCORES đã được tạo';
+                            PRINT 'Bảng SCORES đã được tạo với cột mapType';
                         END
                     ";
 
@@ -240,6 +243,9 @@ namespace SnakeGame.Database
                     {
                         cmd.ExecuteNonQuery();
                     }
+
+                    // ✅ Thêm migration để cập nhật bảng cũ
+                    MigrateDatabase(conn);
 
                     System.Diagnostics.Debug.WriteLine("Database tables created successfully");
                 }
@@ -249,6 +255,72 @@ namespace SnakeGame.Database
                 System.Diagnostics.Debug.WriteLine($"Create tables error: {ex.Message}");
                 System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
                 throw;
+            }
+        }
+
+        // ✅ THÊM: Method migration để cập nhật database cũ
+        private static void MigrateDatabase(SqlConnection conn)
+        {
+            try
+            {
+                // Kiểm tra và thêm cột mapType nếu chưa có
+                string checkMapTypeColumn = @"
+                    IF NOT EXISTS (
+                        SELECT * FROM sys.columns 
+                        WHERE object_id = OBJECT_ID('SCORES') 
+                        AND name = 'mapType'
+                    )
+                    BEGIN
+                        ALTER TABLE SCORES ADD mapType INT NOT NULL DEFAULT 1;
+                        PRINT '✅ Đã thêm cột mapType vào bảng SCORES';
+                    END
+                ";
+
+                using (SqlCommand cmd = new SqlCommand(checkMapTypeColumn, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Thêm constraint CK_MapType nếu chưa có
+                string checkConstraint = @"
+                    IF NOT EXISTS (
+                        SELECT * FROM sys.check_constraints 
+                        WHERE name = 'CK_MapType'
+                    )
+                    BEGIN
+                        ALTER TABLE SCORES ADD CONSTRAINT CK_MapType CHECK (mapType IN (1, 2));
+                        PRINT '✅ Đã thêm constraint CK_MapType';
+                    END
+                ";
+
+                using (SqlCommand cmd = new SqlCommand(checkConstraint, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Tạo index nếu chưa có
+                string checkIndex = @"
+                    IF NOT EXISTS (
+                        SELECT * FROM sys.indexes 
+                        WHERE name = 'IX_SCORES_MapType' 
+                        AND object_id = OBJECT_ID('SCORES')
+                    )
+                    BEGIN
+                        CREATE INDEX IX_SCORES_MapType ON SCORES(mapType, score DESC);
+                        PRINT '✅ Đã tạo index IX_SCORES_MapType';
+                    END
+                ";
+
+                using (SqlCommand cmd = new SqlCommand(checkIndex, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                System.Diagnostics.Debug.WriteLine("✅ Database migration completed");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"⚠️ Migration warning: {ex.Message}");
             }
         }
 
@@ -277,6 +349,8 @@ namespace SnakeGame.Database
                         else
                         {
                             System.Diagnostics.Debug.WriteLine("Tất cả bảng đã tồn tại");
+                            // ✅ Chạy migration để cập nhật cấu trúc bảng cũ
+                            MigrateDatabase(conn);
                         }
                     }
                 }
