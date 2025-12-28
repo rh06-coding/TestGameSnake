@@ -26,6 +26,7 @@ namespace SnakeGame.Forms
         private void LeaderBoardForm_Load(object sender, EventArgs e)
         {
             radMapVuaBoard.Checked = true;
+            LoadLeaderBoard(1);
         }
 
         
