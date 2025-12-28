@@ -94,7 +94,7 @@ namespace SnakeGame.Forms
 
         private void MenuForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Close();
+            Application.Exit();
         }
     }
 }

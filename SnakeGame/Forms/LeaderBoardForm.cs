@@ -25,10 +25,13 @@ namespace SnakeGame.Forms
 
         private void LeaderBoardForm_Load(object sender, EventArgs e)
         {
-            LoadLeaderBoard();
+            radMapVuaBoard.Checked = true;
+            LoadLeaderBoard(1);
         }
 
-        private void LoadLeaderBoard()
+        
+
+        private void LoadLeaderBoard(int mapType)
         {
             try
             {
@@ -36,7 +39,7 @@ namespace SnakeGame.Forms
                 dgvLeaderBoard.Rows.Clear();
 
                 // Lấy top 10 điểm cao nhất
-                var topScores = _scoreRepository.GetTopScores(10);
+                var topScores = _scoreRepository.GetTopScoresByMap(mapType, 10);
 
                 // Thêm dữ liệu vào DataGridView
                 int rank = 1;
@@ -92,6 +95,20 @@ namespace SnakeGame.Forms
             this.Hide();
             MenuForm menuForm = new MenuForm();
             menuForm.ShowDialog();
+        }
+
+        private void radMapVuaBoard_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radMapVuaBoard.Checked)
+            {
+                SoundService.PlayChoose();
+                LoadLeaderBoard(1);
+            }
+            else
+            {
+                SoundService.PlayChoose();
+                LoadLeaderBoard(2);
+            }
         }
     }
 }
