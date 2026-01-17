@@ -101,9 +101,9 @@
             // 
             this.FPBtn.BackColor = System.Drawing.Color.PaleTurquoise;
             this.FPBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FPBtn.Location = new System.Drawing.Point(283, 353);
+            this.FPBtn.Location = new System.Drawing.Point(276, 353);
             this.FPBtn.Name = "FPBtn";
-            this.FPBtn.Size = new System.Drawing.Size(86, 64);
+            this.FPBtn.Size = new System.Drawing.Size(93, 64);
             this.FPBtn.TabIndex = 6;
             this.FPBtn.Text = "Forgot Password";
             this.FPBtn.UseVisualStyleBackColor = false;

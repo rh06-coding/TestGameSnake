@@ -182,6 +182,13 @@
     <Content Include="Resources\Background_icon\GameBackground2_ic.jpg" />
     <Content Include="Resources\BlueSnake\bluebody.png" />
     <Content Include="Resources\BlueSnake\bluehead.png" />
+    <Content Include="Resources\Decoration\capoo1.gif" />
+    <Content Include="Resources\Decoration\capoo2.gif" />
+    <Content Include="Resources\Decoration\capoo3.gif" />
+    <Content Include="Resources\Decoration\capoo4.gif" />
+    <Content Include="Resources\Decoration\capoo5.gif" />
+    <Content Include="Resources\Decoration\capoo6.gif" />
+    <Content Include="Resources\Decoration\confusing_snake.png" />
     <Content Include="Resources\DefaultSnake\Body.png" />
     <Content Include="Resources\DefaultSnake\DeadBody.png" />
     <Content Include="Resources\DefaultSnake\DeadHead.png" />
