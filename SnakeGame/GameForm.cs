@@ -42,6 +42,15 @@ namespace SnakeGame
         private Image SnakeHeadRightImage;
         private Image OrgSnakeHead;
 
+        //Hình ảnh cho hình trang trí của bar bên phải
+        private Image[] Decorations = {Properties.Resources.capoo1,
+                                       Properties.Resources.capoo2,
+                                       Properties.Resources.capoo3,
+                                       Properties.Resources.capoo4,
+                                       Properties.Resources.capoo5,
+                                       Properties.Resources.capoo6};
+        private int SelectedDecoration;
+
         private bool _isPaused = false; // Biến để theo dõi trạng thái tạm dừng
         private bool _gameStarted = false; //Biến để kiếm tra game đã bắt đầu chưa
         private int _previousScore = 0;
@@ -192,13 +201,33 @@ namespace SnakeGame
                 {
                     GameTimer.Interval -= 1; // Giảm interval để tăng tốc độ
                 }
+
+                if(state.Score % 50 == 0)
+                {
+                    UpdateDecoration(); // Cập nhật hình trang trí mỗi khi điểm số là bội số của 50
+                }
             }
+            _previousScore = state.Score;
+
+            
 
             // Cập nhật điểm số
             ScoreLabel.Text = $"Score: {state.Score}";
 
             // Yêu cầu gameCanvas vẽ lại (sẽ gọi sự kiện GameCanvas_Paint)
             GameCanvas.Invalidate();
+        }
+
+ 
+        private void UpdateDecoration() //Hàm update hình trang trí bên phải
+        {
+            int newDecoration;
+            do
+            {
+                newDecoration = new Random().Next(Decorations.Length);
+            }while(newDecoration == SelectedDecoration);
+            SelectedDecoration = newDecoration;
+            ptbDecoration.Image = Decorations[SelectedDecoration];
         }
 
         // Hàm helper để xử lý game over
@@ -476,6 +505,8 @@ namespace SnakeGame
 
         private void GameForm_Load(object sender, EventArgs e)
         {
+            SelectedDecoration = new Random().Next(Decorations.Length);
+            ptbDecoration.Image = Decorations[SelectedDecoration];
             InitializeGame();
             
         }
