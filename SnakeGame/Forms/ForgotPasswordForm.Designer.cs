@@ -82,7 +82,7 @@
             this.ResetPasswordTxt.TabIndex = 4;
             this.ResetPasswordTxt.UseSystemPasswordChar = true;
             // 
-            // ForgotPassword
+            // ForgotPasswordForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -93,7 +93,8 @@
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.EmailTxt);
             this.Controls.Add(this.label1);
-            this.Name = "ForgotPassword";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Name = "ForgotPasswordForm";
             this.Text = "ForgotPassword";
             this.ResumeLayout(false);
             this.PerformLayout();

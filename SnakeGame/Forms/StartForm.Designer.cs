@@ -124,6 +124,7 @@
             this.Controls.Add(this.passwordTxt);
             this.Controls.Add(this.UsernameTxt);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "StartForm";
             this.Text = "StartForm";
             this.ResumeLayout(false);
