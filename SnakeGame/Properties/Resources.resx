@@ -145,6 +145,9 @@
   <data name="confusing_snake" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Decoration\confusing_snake(1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CreateAccount" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GameBackground\CreateAccount.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="DefaultSnakeBody" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DefaultSnake\Body.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -153,6 +156,9 @@
   </data>
   <data name="DefaultSnakeHead" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DefaultSnake\Head.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ForgotPassword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GameBackground\ForgotPassword.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GameBackground1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GameBackground\GameBackground1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

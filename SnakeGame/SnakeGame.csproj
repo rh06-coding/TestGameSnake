@@ -194,6 +194,8 @@
     <Content Include="Resources\DefaultSnake\DeadHead.png" />
     <Content Include="Resources\DefaultSnake\Food.png" />
     <Content Include="Resources\DefaultSnake\Head.png" />
+    <Content Include="Resources\GameBackground\CreateAccount.png" />
+    <Content Include="Resources\GameBackground\ForgotPassword.png" />
     <Content Include="Resources\GameBackground\GameBackground1.png" />
     <Content Include="Resources\GameBackground\GameBackground2.jpg" />
     <Content Include="Resources\GameBackground\sidebar_bg.jpg" />
