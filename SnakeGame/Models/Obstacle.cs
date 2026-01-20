@@ -32,7 +32,7 @@ namespace SnakeGame.Models
             {
                 attempts++;
 
-                // Tránh biên ?? ??m b?o không gian ch?i
+                // Tránh biên để đảm bảo không gian chơi
                 int x = _rng.Next(2, columns - 2);
                 int y = _rng.Next(2, rows - 2);
                 var candidate = new Position(x, y);
@@ -179,7 +179,7 @@ namespace SnakeGame.Models
             }
         }
 
-        // Xóa ch??ng ng?i v?t t?i v? trí
+        // Xóa chướnng ngại vật tại vị trí
         public void RemoveObstacle(Position position)
         {
             Positions.Remove(position);
