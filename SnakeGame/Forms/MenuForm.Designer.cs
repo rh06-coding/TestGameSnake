@@ -108,25 +108,25 @@
             this.groupBox2.Size = new System.Drawing.Size(776, 160);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Choose Your Background";
+            this.groupBox2.Text = "Choose Your Map";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(552, 29);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 22);
+            this.label2.Size = new System.Drawing.Size(43, 22);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Map khó";
+            this.label2.Text = "Hard";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(98, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 22);
+            this.label1.Size = new System.Drawing.Size(58, 22);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Map Vừa";
+            this.label1.Text = "Normal";
             // 
             // Background2Rad
             // 
