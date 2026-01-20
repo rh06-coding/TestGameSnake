@@ -178,7 +178,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GameForm";
-            this.Text = "Form1";
+            this.Text = "Snake Game";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_Closing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GameForm_Closed);
             this.Load += new System.EventHandler(this.GameForm_Load);

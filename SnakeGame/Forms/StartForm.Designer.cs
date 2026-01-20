@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartForm));
             this.UsernameTxt = new System.Windows.Forms.TextBox();
             this.passwordTxt = new System.Windows.Forms.MaskedTextBox();
             this.Label = new System.Windows.Forms.Label();
@@ -125,8 +126,9 @@
             this.Controls.Add(this.UsernameTxt);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StartForm";
-            this.Text = "StartForm";
+            this.Text = "Start";
             this.ResumeLayout(false);
             this.PerformLayout();
 
