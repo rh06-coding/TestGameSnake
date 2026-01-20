@@ -146,10 +146,10 @@
             this.radMapVuaBoard.ForeColor = System.Drawing.Color.Lime;
             this.radMapVuaBoard.Location = new System.Drawing.Point(243, 51);
             this.radMapVuaBoard.Name = "radMapVuaBoard";
-            this.radMapVuaBoard.Size = new System.Drawing.Size(110, 31);
+            this.radMapVuaBoard.Size = new System.Drawing.Size(134, 31);
             this.radMapVuaBoard.TabIndex = 4;
             this.radMapVuaBoard.TabStop = true;
-            this.radMapVuaBoard.Text = "Map Vừa";
+            this.radMapVuaBoard.Text = "Normal Map";
             this.radMapVuaBoard.UseVisualStyleBackColor = true;
             this.radMapVuaBoard.CheckedChanged += new System.EventHandler(this.radMapVuaBoard_CheckedChanged);
             // 
@@ -160,10 +160,10 @@
             this.radMapKhoBoard.ForeColor = System.Drawing.Color.Lime;
             this.radMapKhoBoard.Location = new System.Drawing.Point(601, 51);
             this.radMapKhoBoard.Name = "radMapKhoBoard";
-            this.radMapKhoBoard.Size = new System.Drawing.Size(109, 31);
+            this.radMapKhoBoard.Size = new System.Drawing.Size(116, 31);
             this.radMapKhoBoard.TabIndex = 5;
             this.radMapKhoBoard.TabStop = true;
-            this.radMapKhoBoard.Text = "Map Khó";
+            this.radMapKhoBoard.Text = "Hard Map";
             this.radMapKhoBoard.UseVisualStyleBackColor = true;
             // 
             // LeaderBoardForm
