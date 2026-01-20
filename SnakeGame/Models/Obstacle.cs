@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +16,7 @@ namespace SnakeGame.Models
             Positions = new List<Position>();
         }
 
-        // T?o ch??ng ng?i v?t ng?u nhi�n tr�n map
+        // Tạo chướng ngại vật ngẫu nhiên trên map
         public void GenerateObstacles(int columns, int rows, IReadOnlyCollection<Position> occupied, int obstacleCount = 5)
         {
             if (columns <= 0) throw new ArgumentOutOfRangeException(nameof(columns));
@@ -32,7 +32,7 @@ namespace SnakeGame.Models
             {
                 attempts++;
 
-                // Tr�nh bi�n ?? ??m b?o kh�ng gian ch?i
+                // Tránh biên ?? ??m b?o không gian ch?i
                 int x = _rng.Next(2, columns - 2);
                 int y = _rng.Next(2, rows - 2);
                 var candidate = new Position(x, y);
@@ -45,7 +45,7 @@ namespace SnakeGame.Models
             }
         }
 
-        // T?o ch??ng ng?i v?t theo m?u ??nh s?n
+        // Tạo chướng ngại vật theo mẫu định sẵn
         public void GeneratePatternObstacles(int columns, int rows, int patternType = 1)
         {
             Positions.Clear();
@@ -158,19 +158,19 @@ namespace SnakeGame.Models
             GenerateObstacles(columns, rows, occupied, obstacleCount);
         }
 
-        // Ki?m tra va ch?m v?i v? tr�
+        // Kiểm tra và chạm vào vị trí
         public bool IsAt(Position position)
         {
             return Positions.Contains(position);
         }
 
-        // X�a t?t c? ch??ng ng?i v?t
+        // Xóa tất cả chướng ngại vật
         public void Clear()
         {
             Positions.Clear();
         }
 
-        // Th�m ch??ng ng?i v?t t�y ch?nh
+        // Thêm chướng ngại vật tùy chỉnh
         public void AddObstacle(Position position)
         {
             if (!Positions.Contains(position))
@@ -179,7 +179,7 @@ namespace SnakeGame.Models
             }
         }
 
-        // X�a ch??ng ng?i v?t t?i v? tr�
+        // Xóa ch??ng ng?i v?t t?i v? trí
         public void RemoveObstacle(Position position)
         {
             Positions.Remove(position);
