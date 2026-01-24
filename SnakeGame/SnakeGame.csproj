@@ -96,10 +96,10 @@
     <Compile Include="Forms\StartForm.Designer.cs">
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameForm.cs">
+    <Compile Include="Forms\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameForm.Designer.cs">
+    <Compile Include="Forms\GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Direction.cs" />
@@ -137,7 +137,7 @@
     <EmbeddedResource Include="Forms\StartForm.resx">
       <DependentUpon>StartForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GameForm.resx">
+    <EmbeddedResource Include="Forms\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -194,6 +194,8 @@
     <Content Include="Resources\DefaultSnake\DeadHead.png" />
     <Content Include="Resources\DefaultSnake\Food.png" />
     <Content Include="Resources\DefaultSnake\Head.png" />
+    <Content Include="Resources\GameBackground\CreateAccount.png" />
+    <Content Include="Resources\GameBackground\ForgotPassword.png" />
     <Content Include="Resources\GameBackground\GameBackground1.png" />
     <Content Include="Resources\GameBackground\GameBackground2.jpg" />
     <Content Include="Resources\GameBackground\sidebar_bg.jpg" />

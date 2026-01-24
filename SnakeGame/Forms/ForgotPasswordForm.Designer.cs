@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ForgotPasswordForm));
             this.label1 = new System.Windows.Forms.Label();
             this.EmailTxt = new System.Windows.Forms.TextBox();
             this.ConfirmBtn = new System.Windows.Forms.Button();
@@ -38,24 +39,26 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Pristina", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.MistyRose;
             this.label1.Location = new System.Drawing.Point(126, 110);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(135, 27);
+            this.label1.Size = new System.Drawing.Size(151, 31);
             this.label1.TabIndex = 0;
             this.label1.Text = "Enter your email";
             // 
             // EmailTxt
             // 
-            this.EmailTxt.Location = new System.Drawing.Point(306, 112);
+            this.EmailTxt.Location = new System.Drawing.Point(306, 119);
             this.EmailTxt.Name = "EmailTxt";
             this.EmailTxt.Size = new System.Drawing.Size(305, 22);
             this.EmailTxt.TabIndex = 1;
             // 
             // ConfirmBtn
             // 
-            this.ConfirmBtn.BackColor = System.Drawing.Color.White;
-            this.ConfirmBtn.Font = new System.Drawing.Font("Pristina", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ConfirmBtn.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.ConfirmBtn.Font = new System.Drawing.Font("Pristina", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ConfirmBtn.Location = new System.Drawing.Point(518, 264);
             this.ConfirmBtn.Name = "ConfirmBtn";
             this.ConfirmBtn.Size = new System.Drawing.Size(93, 40);
@@ -67,10 +70,12 @@
             // label
             // 
             this.label.AutoSize = true;
-            this.label.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label.Location = new System.Drawing.Point(141, 201);
+            this.label.BackColor = System.Drawing.Color.Transparent;
+            this.label.Font = new System.Drawing.Font("Pristina", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label.ForeColor = System.Drawing.Color.MistyRose;
+            this.label.Location = new System.Drawing.Point(126, 201);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(120, 27);
+            this.label.Size = new System.Drawing.Size(147, 31);
             this.label.TabIndex = 3;
             this.label.Text = "Reset Password";
             // 
@@ -87,15 +92,19 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.BackgroundImage = global::SnakeGame.Properties.Resources.ForgotPassword;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.ResetPasswordTxt);
             this.Controls.Add(this.label);
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.EmailTxt);
             this.Controls.Add(this.label1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ForgotPasswordForm";
-            this.Text = "ForgotPassword";
+            this.Text = "Forgot Password?";
             this.ResumeLayout(false);
             this.PerformLayout();
 

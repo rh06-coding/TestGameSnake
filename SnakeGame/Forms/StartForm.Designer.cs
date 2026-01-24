@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartForm));
             this.UsernameTxt = new System.Windows.Forms.TextBox();
             this.passwordTxt = new System.Windows.Forms.MaskedTextBox();
             this.Label = new System.Windows.Forms.Label();
@@ -54,29 +55,31 @@
             // Label
             // 
             this.Label.AutoSize = true;
-            this.Label.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.Label.Font = new System.Drawing.Font("Pristina", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label.Location = new System.Drawing.Point(158, 250);
+            this.Label.BackColor = System.Drawing.Color.Transparent;
+            this.Label.Font = new System.Drawing.Font("Pristina", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label.ForeColor = System.Drawing.SystemColors.Info;
+            this.Label.Location = new System.Drawing.Point(135, 254);
             this.Label.Name = "Label";
-            this.Label.Size = new System.Drawing.Size(192, 31);
+            this.Label.Size = new System.Drawing.Size(215, 31);
             this.Label.TabIndex = 2;
             this.Label.Text = "Enter username or email";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.label1.Font = new System.Drawing.Font("Pristina", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(221, 299);
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Pristina", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Info;
+            this.label1.Location = new System.Drawing.Point(207, 299);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(129, 31);
+            this.label1.Size = new System.Drawing.Size(143, 31);
             this.label1.TabIndex = 3;
             this.label1.Text = "Enter password";
             // 
             // LoginBtn
             // 
             this.LoginBtn.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.LoginBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LoginBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LoginBtn.Location = new System.Drawing.Point(513, 353);
             this.LoginBtn.Name = "LoginBtn";
             this.LoginBtn.Size = new System.Drawing.Size(86, 64);
@@ -88,7 +91,7 @@
             // SignInBtn
             // 
             this.SignInBtn.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.SignInBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignInBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignInBtn.Location = new System.Drawing.Point(395, 353);
             this.SignInBtn.Name = "SignInBtn";
             this.SignInBtn.Size = new System.Drawing.Size(86, 64);
@@ -100,7 +103,7 @@
             // FPBtn
             // 
             this.FPBtn.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.FPBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FPBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FPBtn.Location = new System.Drawing.Point(276, 353);
             this.FPBtn.Name = "FPBtn";
             this.FPBtn.Size = new System.Drawing.Size(93, 64);
@@ -125,8 +128,9 @@
             this.Controls.Add(this.UsernameTxt);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StartForm";
-            this.Text = "StartForm";
+            this.Text = "Start";
             this.ResumeLayout(false);
             this.PerformLayout();
 

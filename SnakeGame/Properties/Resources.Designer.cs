@@ -153,6 +153,16 @@ namespace SnakeGame.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CreateAccount {
+            get {
+                object obj = ResourceManager.GetObject("CreateAccount", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DefaultSnakeBody {
             get {
                 object obj = ResourceManager.GetObject("DefaultSnakeBody", resourceCulture);
@@ -176,6 +186,16 @@ namespace SnakeGame.Properties {
         internal static System.Drawing.Bitmap DefaultSnakeHead {
             get {
                 object obj = ResourceManager.GetObject("DefaultSnakeHead", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ForgotPassword {
+            get {
+                object obj = ResourceManager.GetObject("ForgotPassword", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

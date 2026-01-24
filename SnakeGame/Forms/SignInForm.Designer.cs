@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignInForm));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,43 +41,49 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(99, 89);
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Pristina", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.MistyRose;
+            this.label1.Location = new System.Drawing.Point(103, 110);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(165, 27);
+            this.label1.Size = new System.Drawing.Size(192, 31);
             this.label1.TabIndex = 0;
             this.label1.Text = "Choose your username";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(122, 146);
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Pristina", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.MistyRose;
+            this.label2.Location = new System.Drawing.Point(105, 162);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(142, 27);
+            this.label2.Size = new System.Drawing.Size(159, 31);
             this.label2.TabIndex = 1;
             this.label2.Text = "Enter your Email";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Pristina", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.MistyRose;
             this.label3.Location = new System.Drawing.Point(103, 212);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(161, 27);
+            this.label3.Size = new System.Drawing.Size(191, 31);
             this.label3.TabIndex = 2;
             this.label3.Text = "Choose your password";
             // 
             // UsernameTxt
             // 
-            this.UsernameTxt.Location = new System.Drawing.Point(306, 94);
+            this.UsernameTxt.Location = new System.Drawing.Point(306, 115);
             this.UsernameTxt.Name = "UsernameTxt";
             this.UsernameTxt.Size = new System.Drawing.Size(269, 22);
             this.UsernameTxt.TabIndex = 3;
             // 
             // EmailTxt
             // 
-            this.EmailTxt.Location = new System.Drawing.Point(306, 148);
+            this.EmailTxt.Location = new System.Drawing.Point(306, 167);
             this.EmailTxt.Name = "EmailTxt";
             this.EmailTxt.Size = new System.Drawing.Size(269, 22);
             this.EmailTxt.TabIndex = 4;
@@ -93,7 +100,7 @@
             // 
             this.ConfirmBtn.BackColor = System.Drawing.Color.LightBlue;
             this.ConfirmBtn.Font = new System.Drawing.Font("Pristina", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ConfirmBtn.Location = new System.Drawing.Point(306, 280);
+            this.ConfirmBtn.Location = new System.Drawing.Point(306, 294);
             this.ConfirmBtn.Name = "ConfirmBtn";
             this.ConfirmBtn.Size = new System.Drawing.Size(120, 50);
             this.ConfirmBtn.TabIndex = 6;
@@ -106,6 +113,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.BackgroundImage = global::SnakeGame.Properties.Resources.CreateAccount;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.PasswordTxt);
@@ -114,9 +123,11 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SignInForm";
-            this.Text = "SignInForm";
+            this.Text = "Sign In";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LeaderBoardForm));
             this.dgvLeaderBoard = new System.Windows.Forms.DataGridView();
             this.RankColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UsernameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -145,10 +146,10 @@
             this.radMapVuaBoard.ForeColor = System.Drawing.Color.Lime;
             this.radMapVuaBoard.Location = new System.Drawing.Point(243, 51);
             this.radMapVuaBoard.Name = "radMapVuaBoard";
-            this.radMapVuaBoard.Size = new System.Drawing.Size(110, 31);
+            this.radMapVuaBoard.Size = new System.Drawing.Size(134, 31);
             this.radMapVuaBoard.TabIndex = 4;
             this.radMapVuaBoard.TabStop = true;
-            this.radMapVuaBoard.Text = "Map Vừa";
+            this.radMapVuaBoard.Text = "Normal Map";
             this.radMapVuaBoard.UseVisualStyleBackColor = true;
             this.radMapVuaBoard.CheckedChanged += new System.EventHandler(this.radMapVuaBoard_CheckedChanged);
             // 
@@ -159,10 +160,10 @@
             this.radMapKhoBoard.ForeColor = System.Drawing.Color.Lime;
             this.radMapKhoBoard.Location = new System.Drawing.Point(601, 51);
             this.radMapKhoBoard.Name = "radMapKhoBoard";
-            this.radMapKhoBoard.Size = new System.Drawing.Size(109, 31);
+            this.radMapKhoBoard.Size = new System.Drawing.Size(116, 31);
             this.radMapKhoBoard.TabIndex = 5;
             this.radMapKhoBoard.TabStop = true;
-            this.radMapKhoBoard.Text = "Map Khó";
+            this.radMapKhoBoard.Text = "Hard Map";
             this.radMapKhoBoard.UseVisualStyleBackColor = true;
             // 
             // LeaderBoardForm
@@ -179,6 +180,7 @@
             this.Controls.Add(this.dgvLeaderBoard);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LeaderBoardForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Leader Board";
