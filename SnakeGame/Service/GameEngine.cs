@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +33,7 @@ namespace SnakeGame.Services
             _state = new GameState(columns, rows);
         }
 
-        // Click 1 l?n - h?u d?ng cho unit test
+        // Click 1 lần - hỗ trợ cho unit test
         public bool Tick()
         {
             lock (_sync)
@@ -50,7 +50,7 @@ namespace SnakeGame.Services
             }
         }
 
-        // ??i h??ng di chuy?n c?a r?n
+        // Thay đổi hướng di chuyển của rắn
         public void ChangeDirection(Direction.Huong newDirection)
         {
             lock (_sync)
@@ -103,7 +103,7 @@ namespace SnakeGame.Services
             }
         }
 
-        // Th? lo?i s? ki?n
+        // Thay đổi trạng thái game
         public sealed class GameStateEventArgs : EventArgs
         {
             public GameState State { get; private set; }
